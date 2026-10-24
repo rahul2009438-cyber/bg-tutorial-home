@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>বি.জি. টিউটোরিয়াল হোম | শিক্ষক বাবুন ঘোষ - দক্ষিণ হাবড়া</title>
+    
+    <!-- Mobile Web App Meta Tags -->
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#059669" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="বি.জি. টিউটোরিয়াল হোম" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    
+    <!-- SEO & Open Graph -->
+    <meta name="description" content="বি.জি. টিউটোরিয়াল হোম - দক্ষিণ হাবড়া, এস. এন. দে রোড। অভিজ্ঞ শিক্ষক বাবুন ঘোষ পরিচালিত সপ্তম থেকে দ্বাদশ শ্রেণীর বিশেষ কোচিং একাডেমি।" />
+    <meta name="author" content="Rahul Dutta (Lead Digital Architect & Developer) - Created by Rahul" />
+    <meta property="og:title" content="বি.জি. টিউটোরিয়াল হোম | শিক্ষক বাবুন ঘোষ" />
+    <meta property="og:description" content="দক্ষিণ হাবড়া গণিত ও বিজ্ঞান স্পেশাল কোচিং একাডেমি" />
+    <meta property="og:image" content="./icon-512.png" />
+    <script type="module" crossorigin src="./assets/index-Dp7cKm8J.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-zjYqxYnR.css">
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-emerald-500 selection:text-white">
+    <div id="root"></div>
+    <script>
+      // Register PWA Service Worker for Offline Cache & Stability
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(err => {
+            console.log('SW registration error:', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

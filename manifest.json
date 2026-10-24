@@ -1,0 +1,33 @@
+{
+  "name": "বি.জি. টিউটোরিয়াল হোম - বাবুন ঘোষ",
+  "short_name": "BG Tutorial",
+  "description": "দক্ষিণ হাবড়া গণিত ও বিজ্ঞান স্পেশাল কোচিং একাডেমি - শিক্ষক বাবুন ঘোষ",
+  "start_url": "./",
+  "scope": "./",
+  "id": "bg-tutorial-home-app",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#020617",
+  "theme_color": "#059669",
+  "categories": ["education", "books"],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
