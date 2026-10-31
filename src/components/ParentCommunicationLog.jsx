@@ -77,7 +77,7 @@ export default function ParentCommunicationLog({ students = [], customData = {} 
     await logCommunication(
       st.studentId || st.id,
       phone,
-      'WhatsApp লিংক ওপেন (Client-Side Intent)',
+      'WhatsApp লিঙ্ক ওপেন (Client-Side Intent)',
       `[${topic}] ${templateMsg.slice(0, 100)}...`
     );
 
@@ -114,13 +114,13 @@ export default function ParentCommunicationLog({ students = [], customData = {} 
           </div>
           <h2 className="text-xl sm:text-2xl font-black">সকল কল ও মেসেজ যোগাযোগের পূর্ণাঙ্গ ইতিহাস</h2>
           <p className="text-xs text-teal-100 mt-1 max-w-xl">
-            প্রতিটি WhatsApp মেসেজ লিংক ওপেন এবং ফোন কলের তারিখ, সময় ও বিষয়বস্তু ক্লায়েন্ট-সাইড মেমরিতে স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে।
+            প্রতিটি WhatsApp মেসেজ লিংক ওপেন এবং ফোন কলের তারিখ, সময় ও বিষয়বস্তু ক্লায়েন্ট-সাইড মেমরিতে স্বয়ংক্রিয়ভাবে সংরক্ষিত থাকে।
           </p>
         </div>
 
         <div className="p-3 bg-white/10 rounded-2xl border border-white/20 text-xs text-teal-100 flex items-center space-x-2 shrink-0">
           <Info className="w-4 h-4 text-amber-300 shrink-0" />
-          <span>WhatsApp লিংকগুলো আপনার ব্রাউজারের wa.me ইনটেন্ট ব্যবহার করে</span>
+          <span>WhatsApp লিংকগুলো আপনার ব্রাউজারের wa.me ইন্টেন্ট ব্যবহার করে</span>
         </div>
       </div>
 

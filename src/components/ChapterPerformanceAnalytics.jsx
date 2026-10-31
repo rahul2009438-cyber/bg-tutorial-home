@@ -14,7 +14,7 @@ export default function ChapterPerformanceAnalytics({ students = [], customData 
   const DEFAULT_CHAPTER_METRICS = {
     'Class 10': [
       { chapter: 'গ্যাসের আচরণ (Behavior of Gases)', testsTaken: 3, avgScore: 68, weakCount: 2, totalStudents: 14, status: 'good' },
-      { chapter: 'রাসায়নিক গণনা (Chemical Calculations)', testsTaken: 2, avgScore: 46, weakCount: 7, totalStudents: 14, status: 'critical' },
+      { chapter: 'রাসায়নিক গণনা (Chemical Calculations)', testsTaken: 2, avgScore: 46, weakCount: 7, totalStudents: 14, status: 'critical' },
       { chapter: 'আলো (Light & Refraction)', testsTaken: 4, avgScore: 54, weakCount: 5, totalStudents: 14, status: 'warning' },
       { chapter: 'চলতড়িৎ (Current Electricity)', testsTaken: 3, avgScore: 48, weakCount: 8, totalStudents: 14, status: 'critical' },
       { chapter: 'পর্যায় সারণি (Periodic Table)', testsTaken: 2, avgScore: 74, weakCount: 1, totalStudents: 14, status: 'good' },
@@ -58,7 +58,7 @@ export default function ChapterPerformanceAnalytics({ students = [], customData 
         <div>
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-black bg-white/20 text-white mb-2">
             <BarChart2 className="w-3.5 h-3.5" />
-            <span>অধ্যায়ভিত্তিক পারফরম্যান্স ও রোগ নির্ণয় • CHAPTER ANALYTICS</span>
+            <span>অধ্যায়ভিত্তিক পারফরম্যান্স ও রোগ নির্ণয় • CHAPTER ANALYTICS</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black">কোন চ্যাপ্টারে শিক্ষার্থীরা পিছিয়ে? স্বয়ংক্রিয় ডায়াগনোসিস</h2>
           <p className="text-xs text-rose-100 mt-1 max-w-xl">
@@ -113,7 +113,7 @@ export default function ChapterPerformanceAnalytics({ students = [], customData 
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4">
         <h3 className="font-black text-slate-900 text-sm sm:text-base flex items-center space-x-2">
           <Layers className="w-4 h-4 text-indigo-600" />
-          <span>অধ্যায়ভিত্তিক গড় নম্বর ও দুর্বল শিক্ষার্থীর সংখ্যা ({selectedBatch})</span>
+          <span>অধ্যায়ভিত্তিক গড় নম্বর ও দুর্বল শিক্ষার্থীর সংখ্যা ({selectedBatch})</span>
         </h3>
 
         <div className="space-y-3">

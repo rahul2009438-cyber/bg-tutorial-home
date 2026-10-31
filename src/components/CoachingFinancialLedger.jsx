@@ -379,7 +379,7 @@ export default function CoachingFinancialLedger({
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-600 block mb-1">ছাড়ের ধরন</label>
+              <label className="text-xs font-bold text-slate-600 block mb-1">ছাড়ের ধরণ</label>
               <select
                 value={discountForm.discountType}
                 onChange={(e) => setDiscountForm({ ...discountForm, discountType: e.target.value })}

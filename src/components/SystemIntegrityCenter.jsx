@@ -56,7 +56,7 @@ export default function SystemIntegrityCenter({ customData = {} }) {
             type: 'ORPHAN_EXAM',
             table: 'examResults',
             id: ex.id,
-            description: `পরীক্ষার ফলাফল #${ex.id} (${ex.examName || 'Test'}) মুছে ফেলা শিক্ষার্থী ID: ${ex.studentId}-এর সাথে লিংক রয়েছে`
+            description: `পরীক্ষার ফলাফল #${ex.id} (${ex.examName || 'Test'}) মুছে ফেলা শিক্ষার্থী ID: ${ex.studentId}-এর সাথে লিঙ্ক রয়েছে`
           });
         }
       });
@@ -68,7 +68,7 @@ export default function SystemIntegrityCenter({ customData = {} }) {
             type: 'ORPHAN_FEE',
             table: 'feePayments',
             id: fee.id,
-            description: `ফি রসিদ #${fee.receiptNo || fee.id} মুছে ফেলা শিক্ষার্থী ID: ${fee.studentId}-এর সাথে লিংক রয়েছে`
+            description: `ফি রসিদ #${fee.receiptNo || fee.id} মুছে ফেলা শিক্ষার্থী ID: ${fee.studentId}-এর সাথে লিঙ্ক রয়েছে`
           });
         }
       });
@@ -89,7 +89,7 @@ export default function SystemIntegrityCenter({ customData = {} }) {
             type: 'MISSING_ROLL',
             table: 'students',
             id: st.id,
-            description: `${st.name} (${st.batch})-এর কোনো ক্লাস রোল নম্বর বরাদ্দ নেই`
+            description: `${st.name} (${st.batch})-এর কোনো ক্লাস রোল নম্বর বরাদ্দ করা নেই`
           });
         }
       });
@@ -170,7 +170,7 @@ export default function SystemIntegrityCenter({ customData = {} }) {
         <div>
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-2">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>সিস্টেম রিলায়াবিলিটি ও ইন্টিগ্রিটি সেন্টার • SYSTEM RELIABILITY</span>
+            <span>সিস্টেম রিলাইবিলিটি ও ইন্টিগ্রিটি সেন্টার • SYSTEM RELIABILITY</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black">ডাটাবেস রিকভারি পয়েন্ট, অনাথ রেকর্ড স্ক্যানার ও কোটা ডায়াগনোসিস</h2>
           <p className="text-xs text-slate-300 mt-1 max-w-xl">

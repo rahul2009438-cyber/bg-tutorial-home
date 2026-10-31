@@ -44,7 +44,7 @@ export default function QuestionBankManager({ customData = {} }) {
       marks: 1,
       difficulty: 'Easy',
       question: 'বায়ুমণ্ডলের কোন স্তরে ট্রপোস্ফিয়ার এবং স্ট্র্যাটোস্ফিয়ারের মাঝে শান্তমণ্ডল দেখা যায়?',
-      answer: 'স্ট্র্যাটোস্ফিয়ার স্তরে বায়ুর পরিচলন স্রোত ও ঝড়-বৃষ্টি না থাকায় একে শান্তমণ্ডল বলা হয়।',
+      answer: 'স্ট্র্যাটোস্ফিয়ার স্তরে বায়ুর পরিচলন স্রোত ও ঝড়-বৃষ্টি না থাকায় একে শান্তমণ্ডল বলা হয়।',
       formula: ''
     },
     {
@@ -67,7 +67,7 @@ export default function QuestionBankManager({ customData = {} }) {
       difficulty: 'Medium',
       question: 'স্নেলের সূত্রটি লেখো। অবতল দর্পণ কীভাবে বিবর্ধিত অসদবিম্ব গঠন করে তা রশ্মিচিত্রের সাহায্যে দেখাও।',
       answer: 'প্রতিসরণের দ্বিতীয় সূত্র (স্নেলের সূত্র): নির্দিষ্ট দুটি মাধ্যম ও নির্দিষ্ট বর্ণের আলোর জন্য আপাতন কোণের সাইন এবং প্রতিসরণ কোণের সাইনের অনুপাত সর্বদা ধ্রুবক। বস্তু ফোকাস ও মেরুর মাঝে থাকলে বিবর্ধিত অসদবিম্ব গঠিত হয়।',
-      formula: 'sin i / sin r = μ'
+      formula: 'sin i / sin r = \u03bc'
     },
     {
       classLevel: 'Class 10',
@@ -76,8 +76,8 @@ export default function QuestionBankManager({ customData = {} }) {
       chapter: 'চলতড়িৎ (Current Electricity)',
       marks: 3,
       difficulty: 'Hard',
-      question: 'ওহমের সূত্রটি বিবৃতি করো। দুটি 10 ওহম রোধককে সমান্তরাল সমবায়ে যুক্ত করলে তুল্য রোধ কত হবে?',
-      answer: 'উষ্ণতা ও অন্যান্য ভৌত অবস্থা অপরিবর্তিত থাকলে কোনো পরিবাহীর প্রবাহমাত্রা পরিবাহীর দুই প্রান্তের বিভব প্রভেদের সমানুপাতিক। সমান্তরাল সমবায়ে 1/R = 1/10 + 1/10 = 2/10, অতএব R = 5 ওহম।',
+      question: 'ওহমের সূত্রটি বিবৃত করো। দুটি 10 ওহম রোধকে সমান্তরাল সমবায়ে যুক্ত করলে তুল্য রোধ কত হবে?',
+      answer: 'উষ্ণতা ও অন্যান্য ভৌত অবস্থা অপরিবর্তিত থাকলে কোনো পরিবাহীর প্রবাহমাত্রা পরিবাহীর দুই প্রান্তের বিভব প্রভেদের সমানুপাতিক। সমান্তরাল সমবায়ে 1/R = 1/10 + 1/10 = 2/10, অতএব R = 5 ওহম।',
       formula: 'V = IR, 1/R = 1/R1 + 1/R2'
     },
     {
@@ -88,8 +88,8 @@ export default function QuestionBankManager({ customData = {} }) {
       marks: 3,
       difficulty: 'Medium',
       question: 'শ্রীধর আচার্যের সূত্রের সাহায্যে সমাধান করো: 2x² - 7x + 3 = 0',
-      answer: 'x = [-b ± √(b² - 4ac)] / (2a). এখানে a=2, b=-7, c=3. নিরূপক = 49 - 24 = 25. অতএব x = (7 ± 5)/4 ⇒ x = 3 অথবা x = 1/2.',
-      formula: 'x = (-b ± √(b² - 4ac)) / (2a)'
+      answer: 'x = [-b \u00b1 \u221a(b\u00b2 - 4ac)] / (2a). এখানে a=2, b=-7, c=3. নিরূপক = 49 - 24 = 25. অতএব x = (7 \u00b1 5)/4 \u21d2 x = 3 অথবা x = 1/2.',
+      formula: 'x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / (2a)'
     },
     {
       classLevel: 'Class 10',
@@ -100,7 +100,7 @@ export default function QuestionBankManager({ customData = {} }) {
       difficulty: 'Hard',
       question: 'প্রমাণ করো যে, বৃত্তের কোনো বিন্দুতে স্পর্শক ও স্পর্শবিন্দুগামী ব্যাসার্ধ পরস্পর লম্বভাবে অবস্থান করে।',
       answer: 'উপপাদ্য ৪০ — পাঠ্যপুস্তকের প্রমাণ অনুযায়ী স্পর্শকের উপর যেকোনো অপর বিন্দু বৃত্তের বাইরে অবস্থিত। সুতরাং স্পর্শবিন্দুগামী ব্যাসার্ধই ক্ষুদ্রতম দূরত্ব এবং তা স্পর্শকের ওপর লম্ব।',
-      formula: 'OP ⊥ AB'
+      formula: 'OP \u22a5 AB'
     }
   ];
 
@@ -207,7 +207,7 @@ export default function QuestionBankManager({ customData = {} }) {
             <BookOpen className="w-3.5 h-3.5" />
             <span>প্রশ্ন ভাণ্ডার ও স্মার্ট প্রশ্নপত্র মেকার • QUESTION REPOSITORY</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black">শ্রেণিভিত্তিক অধ্যায় অনুযায়ী ক্যাটাগরাইজড প্রশ্ন ব্যাংক</h2>
+          <h2 className="text-xl sm:text-2xl font-black">শ্রেণিভিত্তিক অধ্যায় অনুযায়ী ক্যাটাগরাইজড প্রশ্ন ব্যাঙ্ক</h2>
           <p className="text-xs text-indigo-100 mt-1 max-w-xl">
             WBBSE / WBCHSE মাধ্যমিক ও একাদশ-দ্বাদশ শ্রেণির পদার্থবিজ্ঞান ও গণিতের প্রশ্ন ফিল্টার করুন এবং ১-ক্লিকে টেস্ট শিট তৈরি করুন।
           </p>
@@ -491,7 +491,8 @@ export default function QuestionBankManager({ customData = {} }) {
                     <span className="font-extrabold mr-2">{idx + 1}.</span>
                     <span>{q.question}</span>
                   </div>
-                  {q.formula && (\n                    <span className="text-[10px] text-slate-400 font-mono block">
+                  {q.formula && (
+                    <span className="text-[10px] text-slate-400 font-mono block">
                       [সংকেত / সূত্র: {q.formula}]
                     </span>
                   )}
@@ -509,7 +510,8 @@ export default function QuestionBankManager({ customData = {} }) {
               শিক্ষকের মডেল উত্তর ও মার্কিং স্কিম (TEACHER'S ANSWER KEY):
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-slate-600">
-              {selectedQuestionsList.map((q, idx) => (\n                <div key={idx} className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-0.5">
+              {selectedQuestionsList.map((q, idx) => (
+                <div key={idx} className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-0.5">
                   <span className="font-bold text-slate-900">{idx + 1}. {q.chapter} ({q.marks} নম্বর):</span>
                   <p className="text-slate-700">{q.answer || 'বিশদ বিবরণ ক্লাসে আলোচিত হয়েছে।'}</p>
                 </div>

@@ -39,7 +39,7 @@ export default function StudentDocumentGenerator({ students = [], customData = {
             <CreditCard className="w-3.5 h-3.5" />
             <span>শিক্ষার্থী ডকুমেন্ট ও আইডি কার্ড জেনারেটর • STUDENT DOCUMENT SUITE</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black">স্ট্যান্ডার্ড আইডি কার্ড, অ্যাডমিশন ফর্ম ও প্রোফাইল ডসিয়ার</h2>
+          <h2 className="text-xl sm:text-2xl font-black">স্ট্যান্ডার্ড আইডি কার্ড, অ্যাডমিশন ফর্ম ও প্রফাইল ডসিয়ার</h2>
           <p className="text-xs text-blue-100 mt-1 max-w-xl">
             BGTH স্ট্যান্ডার্ডাইজড আইডি (যেমন: {standardizedId || 'BGTH-2026-C10-01'}) সহ অফলাইন কিউআর কোড বিশিষ্ট পকেট আইডি কার্ড এবং অফিসিয়াল ফর্ম প্রিন্ট করুন।
           </p>
@@ -100,7 +100,8 @@ export default function StudentDocumentGenerator({ students = [], customData = {
       </div>
 
       {/* ================= DOCUMENT 1: POCKET ID CARD WITH QR ================= */}
-      {docType === 'id_card' && student && (\n        <div className="flex justify-center p-4 sm:p-8 bg-slate-100 rounded-3xl border border-slate-200 print:bg-white print:border-none print:p-0">
+      {docType === 'id_card' && student && (
+        <div className="flex justify-center p-4 sm:p-8 bg-slate-100 rounded-3xl border border-slate-200 print:bg-white print:border-none print:p-0">
           <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-300 print:shadow-none print:border-slate-800">
             {/* Header */}
             <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 text-center border-b-2 border-amber-400">
@@ -133,7 +134,7 @@ export default function StudentDocumentGenerator({ students = [], customData = {
                     <span className="font-bold text-slate-700">ক্লাস রোল:</span> {student.roll || 'N/A'}
                   </div>
                   <div className="text-slate-600 text-[11px]">
-                    <span className="font-bold text-slate-700">স্কুল:</span> {student.school || student.schoolName || 'স্থানীয় হাইস্কুল'}
+                    <span className="font-bold text-slate-700">স্কুল:</span> {student.school || student.schoolName || 'স্থানীয় হাইস্কুল'}
                   </div>
                 </div>
               </div>

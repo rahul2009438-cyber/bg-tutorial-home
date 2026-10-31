@@ -267,7 +267,8 @@ export default function SmartDailyDashboard({
             </button>
           </div>
 
-          {todaySchedules.length === 0 ? (\n            <div className="p-8 text-center bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs font-bold">
+          {todaySchedules.length === 0 ? (
+            <div className="p-8 text-center bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs font-bold">
               আজকে পূর্ব-নির্ধারিত কোনো ব্যাচ নেই। নতুন ব্যাচ স্লট যোগ করতে রুটিন ম্যানেজারে যান।
             </div>
           ) : (
@@ -335,7 +336,7 @@ export default function SmartDailyDashboard({
                     <span className="text-[11px] text-slate-500">ফোন: {st.guardianPhone || st.phone}</span>
                   </div>
                   <a
-                    href={`https://wa.me/91${(st.guardianPhone || st.phone || '').replace(/\\D/g, '')}?text=${encodeURIComponent(`নমস্কার, বি.জি. টিউটোরিয়াল হোম থেকে বাপুন স্যার। আপনার সন্তান ${st.name}-এর চলতি মাসের টিউশন ফি বকেয়া রয়েছে। অনুগ্রহ করে যোগাযোগ করুন।`)}`}
+                    href={`https://wa.me/91${(st.guardianPhone || st.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent(`নমস্কার, বি.জি. টিউটোরিয়াল হোম থেকে বাপুন স্যার। আপনার সন্তান ${st.name}-এর চলতি মাসের টিউশন ফি বকেয়া রয়েছে। অনুগ্রহ করে যোগাযোগ করুন।`)}`}
                     target="_blank"
                     rel="noreferrer"
                     className="px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition active:scale-95"
