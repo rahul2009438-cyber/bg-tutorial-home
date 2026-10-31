@@ -1,17 +1,18 @@
-// B.G. Tutorial Home Service Worker (Offline Cache & PWA Support - v5)
-const CACHE_NAME = 'bg-tutorial-cache-v6';
+// B.G. Tutorial Home Service Worker (Offline Cache & PWA Support - v7)
+const CACHE_NAME = 'bg-tutorial-cache-v7';
 const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './apple-touch-icon.png',
-  './favicon.png',
-  './images/teacher-poster.jpg',
-  './images/banner-board.jpg',
-  './images/visiting-card.jpg',
-  './images/teacher-portrait.jpg'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
+  '/favicon.png',
+  '/favicon.svg',
+  '/images/teacher-poster.jpg',
+  '/images/banner-board.jpg',
+  '/images/visiting-card.jpg',
+  '/images/teacher-portrait.jpg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -75,7 +76,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // ONLY fallback to index.html for page navigation requests!
         if (event.request.mode === 'navigate' || event.request.destination === 'document') {
-          return caches.match('./index.html') || caches.match('/');
+          return caches.match('/index.html') || caches.match('/');
         }
         // Do NOT return HTML for images or assets!
         return new Response('Asset not available offline', { status: 404, statusText: 'Not Found' });
