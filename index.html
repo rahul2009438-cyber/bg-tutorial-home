@@ -7,6 +7,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>বি.জি. টিউটোরিয়াল হোম | শিক্ষক বাবুন ঘোষ - দক্ষিণ হাবড়া</title>
     
+    <!-- Automatic Hard Cache Purge & Service Worker Uninstaller -->
+    <script>
+      (function() {
+        var PURGE_KEY = 'bg_cache_purge_2026_10_31_v8';
+        try {
+          // 1. Unregister all existing service workers immediately
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              for (var i = 0; i < regs.length; i++) {
+                regs[i].unregister();
+              }
+            });
+          }
+          // 2. Clear all browser cache storage
+          if ('caches' in window) {
+            caches.keys().then(function(keys) {
+              for (var i = 0; i < keys.length; i++) {
+                caches.delete(keys[i]);
+              }
+            });
+          }
+          // 3. One-time clean refresh if controller was present
+          if (localStorage.getItem(PURGE_KEY) !== 'done') {
+            localStorage.setItem(PURGE_KEY, 'done');
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+              setTimeout(function() {
+                window.location.reload(true);
+              }, 200);
+            }
+          }
+        } catch (e) {
+          console.warn('Auto cache purge note:', e);
+        }
+      })();
+    </script>
+
     <!-- Mobile Web App Meta Tags -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#059669" />
@@ -32,11 +68,13 @@
   <body class="bg-slate-50 text-slate-900 antialiased selection:bg-emerald-500 selection:text-white">
     <div id="root"></div>
     <script>
-      // Register PWA Service Worker for Offline Cache & Stability
+      // Persistent unregister safeguard for legacy service workers
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(err => {
-            console.log('SW registration error:', err);
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for (var i = 0; i < regs.length; i++) {
+              regs[i].unregister();
+            }
           });
         });
       }
