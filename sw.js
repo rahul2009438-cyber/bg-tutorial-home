@@ -1,5 +1,5 @@
 // B.G. Tutorial Home Service Worker (Offline Cache & PWA Support - v5)
-const CACHE_NAME = 'bg-tutorial-cache-v5';
+const CACHE_NAME = 'bg-tutorial-cache-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
