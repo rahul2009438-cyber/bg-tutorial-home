@@ -1277,6 +1277,11 @@ ${pick(urgencies)}
       {/* HORIZONTAL WORKSPACE TABS */}
       <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
         {[
+          { id: 'daily_dashboard', label: '⚡ ডেইলি ড্যাশবোর্ড', icon: TrendingUp, badge: 'Smart AI' },
+          { id: 'question_bank', label: '📚 প্রশ্ন ভাণ্ডার', icon: BookOpen, badge: 'Blueprint 5.1' },
+          { id: 'omr_generator', label: '🎯 ওএমআর শিট জেনারেটর', icon: CheckSquare, badge: 'OMR' },
+          { id: 'financial_ledger', label: '💰 ফাইন্যান্স ও ফি লেজার', icon: DollarSign, badge: 'Accounts' },
+          { id: 'unified_batch', label: '👥 ব্যাচ ম্যানেজার ও অ্যাটেনডেন্স', icon: Users, badge: 'Batch & Att' },
           { id: 'exam_maker', label: '📑 পরীক্ষার প্রশ্নপত্র ও মক টেস্ট মেকার', icon: FileText, badge: 'New Tool' },
           { id: 'guardian_broadcast', label: '📢 অভিভাবক ব্রডকাস্ট ও জরুরি নোটিশ', icon: Megaphone, badge: 'WhatsApp Hub' },
           { id: 'syllabus_tracker', label: '🎯 সিলেবাস কভারেজ ও রিভিশন ট্র্যাকার', icon: Layers, badge: 'WBBSE / HS' },
