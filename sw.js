@@ -1,5 +1,5 @@
-// B.G. Tutorial Home Service Worker (Offline Cache & PWA Support - v3)
-const CACHE_NAME = 'bg-tutorial-cache-v3';
+// B.G. Tutorial Home Service Worker (Offline Cache & PWA Support - v5)
+const CACHE_NAME = 'bg-tutorial-cache-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -31,6 +31,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('Clearing old cache:', key);
             return caches.delete(key);
           }
         })
@@ -40,8 +41,16 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Controlled update message listener
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('/api/')) {
+  // Do not intercept non-GET or dynamic API calls
+  if (event.request.method !== 'GET' || event.request.url.includes('/api/')) {
     return;
   }
   
@@ -55,7 +64,7 @@ self.addEventListener('fetch', (event) => {
         if (
           networkResponse && 
           networkResponse.status === 200 && 
-          (event.request.destination === 'image' || event.request.url.match(/\.(jpg|jpeg|png|svg|webp|css|js)$/i))
+          (event.request.destination === 'image' || event.request.url.match(/\.(jpg|jpeg|png|svg|webp|css|js|woff2?)$/i))
         ) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
