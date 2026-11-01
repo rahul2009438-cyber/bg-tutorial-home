@@ -1,37 +1,81 @@
-// B.G. TUTORIAL HOME - AUTOMATIC HARD CACHE PURGE & SERVICE WORKER SHIELD
-// Target Cache Version: bg-tutorial-v8
-const CACHE_NAME = 'bg-tutorial-v8';
+const CACHE_NAME = 'bg-tutorial-cache-v5';
+const STATIC_ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/favicon.svg',
+  '/favicon.png',
+  '/icons.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
+  '/images/teacher-poster.jpg',
+  '/images/teacher-portrait.jpg',
+  '/images/banner-board.jpg',
+  '/images/visiting-card.jpg',
+  '/images/bg_tutorial_logo.jpg'
+];
 
 self.addEventListener('install', (event) => {
-  // Immediately activate without waiting
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS).catch((err) => {
+        console.warn('PWA Pre-cache item failed, continuing:', err);
+      });
+    })
+  );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    // 1. Iterate through all caches and execute hard purge of any cache not matching 'bg-tutorial-v8'
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('[SW Purge] Deleting outdated cache key:', key);
             return caches.delete(key);
           }
         })
       );
-     }).then(() => {
-      // 2. Claim all active clients immediately
-      return self.clients.claim();
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
-// Network-first policy with graceful passthrough: ensures all static chunks load fresh without 404s
 self.addEventListener('fetch', (event) => {
+  // Pass-through non-GET requests
+  if (event.request.method !== 'GET') return;
+
+  const url = new URL(event.request.url);
+
+  // Network-First for dynamic / API / HTML requests
+  if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then(cached => cached || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Cache-First for static assets (images, css, js)
   event.respondWith(
-    fetch(event.request).catch((err) => {
-      // If network fails and request is in current cache, serve it
-      return caches.match(event.request);
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
+        }
+        return networkResponse;
+      });
     })
   );
 });
