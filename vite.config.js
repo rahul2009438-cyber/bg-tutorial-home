@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/',
   build: {
+    assetsInlineLimit: 1000000,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
