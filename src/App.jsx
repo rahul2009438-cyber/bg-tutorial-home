@@ -17,10 +17,10 @@ import StudentPortal from './components/StudentPortal';
 import QuizArena from './components/QuizArena';
 import ProtectedAccessScreen from './components/ProtectedAccessScreen';
 import { DETAILED_SYLLABUS } from './data/syllabusData';
-import teacherPosterImg from './assets/images/teacher-poster.jpg';
-import bannerBoardImg from './assets/images/banner-board.jpg';
-import visitingCardImg from './assets/images/visiting-card.jpg';
-import teacherPortraitImg from './assets/images/teacher-portrait.jpg';
+const teacherPosterImg = '/images/teacher-poster.jpg';
+const bannerBoardImg = '/images/banner-board.jpg';
+const visitingCardImg = '/images/visiting-card.jpg';
+const teacherPortraitImg = '/images/teacher-portrait.jpg';
 
 
 export const AMBIENT_SHADERS = [
@@ -255,7 +255,22 @@ export default function App() {
   const [copiedIdNotice, setCopiedIdNotice] = useState(false);
   
   // Navigation State
-  const [activeTab, setActiveTab] = useState('home'); 
+  const [activeTab, setActiveTab] = useState('home');
+  // Android & Mobile Browser Hardware Back Button Handler
+  useEffect(() => {
+    const handlePopState = () => {
+      if (selectedMediaModal) {
+        setSelectedMediaModal(null);
+      } else if (selectedChapterModal) {
+        setSelectedChapterModal(null);
+      } else if (activeTab !== 'home') {
+        setActiveTab('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [selectedMediaModal, selectedChapterModal, activeTab]);
+ 
   // 'home', 'quiz', 'register', 'courses', 'admission', 'tribute', 'study', 'notices', 'payment', 'workspace'
   
   // Selected Class in Syllabus Guide

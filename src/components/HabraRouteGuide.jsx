@@ -5,8 +5,8 @@ export default function HabraRouteGuide({ customData }) {
   const cleanPhone = customData.phone.replace(/[^0-9]/g, '');
 
   const openGoogleMaps = () => {
-    const query = encodeURIComponent("Dakshin Habra, S.N. Dey Road, Habra, West Bengal 743263");
-    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+    // Exact GPS coordinates for B.G. Tutorial Home, South Habra: 22.8436, 88.6322
+    window.open('https://www.google.com/maps/dir/?api=1&destination=22.8436,88.6322', '_blank');
   };
 
   return (

@@ -4,17 +4,16 @@ import {
   Search, AlertCircle, CheckCircle2, ChevronRight, Plus, Trash2, FileText
 } from 'lucide-react';
 import { db, logAudit } from '../utils/db';
+import { getLocalIndianDate, getLocalIndianMonth } from '../utils/dateUtils';
 
 export default function LeaveLateManager({ students = [], customData = {} }) {
   const [selectedBatch, setSelectedBatch] = useState('সকল ব্যাচ');
-  const [selectedMonth, setSelectedMonth] = useState(
-    new Date().toISOString().slice(0, 7) // e.g. "2026-10"
-  );
+  const [selectedMonth, setSelectedMonth] = useState(getLocalIndianMonth());
   const [leavesList, setLeavesList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeForm, setActiveForm] = useState({
     studentId: '',
-    date: new Date().toISOString().split('T')[0],
+    date: getLocalIndianDate(),
     type: 'Late', // 'Leave' | 'Late' | 'Absent'
     reason: 'ট্রাফিক জ্যাম ও দেরি',
     arrivalTime: '08:15'

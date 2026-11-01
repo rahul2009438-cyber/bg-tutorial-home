@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Printer, CheckCircle, HelpCircle, Sparkles, ArrowLeft } from 'lucide-react';
 
-export default function OMRSheetGenerator({ customData = {}, onBack }) {
+import { db, logAudit } from '../utils/db';
+import { CheckCircle2, Award, Save } from 'lucide-react';
+
+export default function OMRSheetGenerator({ students = [], customData = {}, onBack }) {
   const [questionCount, setQuestionCount] = useState(30); // 20, 30, 50
   const [examName, setExamName] = useState('পর্যায়ক্রমিক মক টেস্ট ২০২৬');
   const [subject, setSubject] = useState('গণিত ও ভৌতবিজ্ঞান');
@@ -9,6 +12,73 @@ export default function OMRSheetGenerator({ customData = {}, onBack }) {
 
   const questions = Array.from({ length: questionCount }, (_, i) => i + 1);
   const options = ['A', 'B', 'C', 'D'];
+
+  const handleStudentSelect = (id) => {
+    setSelectedStudentId(id);
+    const st = students.find(s => String(s.studentId || s.id) === String(id));
+    if (st) {
+      setStudentName(st.name || '');
+      setRollNumber(st.roll || '');
+      if (st.batch) setBatch(st.batch);
+    }
+  };
+
+  const handleBubbleClick = (qNum, opt) => {
+    if (mode === 'answer_key') {
+      setAnswerKey(prev => ({
+        ...prev,
+        [qNum]: prev[qNum] === opt ? null : opt
+      }));
+    } else if (mode === 'grading') {
+      setStudentAnswers(prev => ({
+        ...prev,
+        [qNum]: prev[qNum] === opt ? null : opt
+      }));
+    }
+  };
+
+  const calculateScore = () => {
+    let correct = 0;
+    let attempted = 0;
+    for (let i = 1; i <= questionCount; i++) {
+      if (studentAnswers[i]) {
+        attempted++;
+        if (studentAnswers[i] === answerKey[i]) {
+          correct++;
+        }
+      }
+    }
+    const pct = Math.round((correct / questionCount) * 100);
+    setGradingScore({ correct, attempted, total: questionCount, pct });
+  };
+
+  const saveExamResult = async () => {
+    if (!gradingScore || !selectedStudentId) {
+      alert('??????? ??? ?????????? ???????? ???? ??? ????? ???? ?????');
+      return;
+    }
+    try {
+      if (db && db.examResults) {
+        await db.examResults.add({
+          studentId: selectedStudentId,
+          studentName: studentName || 'Unknown',
+          batch,
+          subject,
+          examName,
+          score: gradingScore.correct,
+          totalMarks: gradingScore.total,
+          percentage: gradingScore.pct,
+          date: new Date().toISOString().split('T')[0]
+        });
+        await logAudit('EXAM_RESULT_ADD', 'OMR', `${studentName}: ${gradingScore.correct}/${gradingScore.total}`);
+        setSaveStatus('? OMR ???????? ????? ??????? ???????? ?????!');
+        setTimeout(() => setSaveStatus(''), 3000);
+      }
+    } catch(e) {
+      alert('????? ???????? ??????: ' + e.message);
+    }
+  };
+
 
   return (
     <div className="space-y-6">
@@ -88,6 +158,91 @@ export default function OMRSheetGenerator({ customData = {}, onBack }) {
         </div>
       </div>
 
+            {/* Mode & Student Selector (Hidden in print) */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-slate-900 border border-slate-800 text-white print:hidden">
+        <div className="flex items-center space-x-2">
+          <span className="text-xs font-bold text-slate-300">??? ????????:</span>
+          <button
+            type="button"
+            onClick={() => setMode('print')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition ${mode === 'print' ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-300'}`}
+          >
+            ??? ??????? ???
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode('answer_key')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition ${mode === 'answer_key' ? 'bg-amber-600 border-amber-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-300'}`}
+          >
+            ?? ????????? ????
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode('grading'); calculateScore(); }}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition ${mode === 'grading' ? 'bg-emerald-600 border-emerald-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-300'}`}
+          >
+            ? ????? ?????????
+          </button>
+        </div>
+
+        {/* Student dropdown */}
+        <div className="flex items-center space-x-2">
+          <label className="text-xs font-bold text-slate-400">??????????:</label>
+          <select
+            value={selectedStudentId}
+            onChange={(e) => handleStudentSelect(e.target.value)}
+            className="bg-slate-800 border border-slate-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl"
+          >
+            <option value="">-- ?????????? ???????? ???? --</option>
+            {students.map(s => (
+              <option key={s.id} value={s.studentId || s.id}>
+                {s.name} ({s.batch} ? ??? {s.roll || 'N/A'})
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Live Grading Result Banner */}
+      {mode === 'grading' && (
+        <div className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-700 text-white flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden">
+          <div className="flex items-center space-x-3">
+            <Award className="w-6 h-6 text-amber-400" />
+            <div>
+              <div className="font-black text-sm">
+                ????????? ?????: {gradingScore ? `${gradingScore.correct} / ${gradingScore.total} (${gradingScore.pct}%)` : '???? ??????? ????'}
+              </div>
+              <div className="text-xs text-emerald-300">
+                ????? ??????: {gradingScore?.attempted || 0} ?? ??????
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={calculateScore}
+              className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-xs font-bold"
+            >
+              ??????? ?????
+            </button>
+            <button
+              type="button"
+              onClick={saveExamResult}
+              className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center space-x-1"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>???????? ??? ????</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {saveStatus && (
+        <div className="p-3 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-300 text-center print:hidden">
+          {saveStatus}
+        </div>
+      )}
+
       {/* Printable OMR Sheet Container */}
       <div className="bg-white text-slate-900 p-8 rounded-3xl border border-slate-300 shadow-xl max-w-4xl mx-auto print:border-none print:shadow-none print:m-0 print:p-4">
         {/* Sheet Header */}
@@ -148,14 +303,30 @@ export default function OMRSheetGenerator({ customData = {}, onBack }) {
                   <div key={qNum} className="flex items-center justify-between py-1 text-xs font-bold border-b border-slate-100">
                     <span className="w-8 font-mono">{String(qNum).padStart(2, '0')}.</span>
                     <div className="flex space-x-2">
-                      {options.map(opt => (
-                        <div
-                          key={opt}
-                          className="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center text-[10px] text-slate-500 font-mono hover:bg-slate-200 cursor-pointer"
-                        >
-                          {opt}
-                        </div>
-                      ))}
+                      {options.map(opt => {
+                        const isKey = answerKey[qNum] === opt;
+                        const isStudent = studentAnswers[qNum] === opt;
+                        let bubbleClass = "w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-mono cursor-pointer transition ";
+                        if (mode === 'answer_key') {
+                          bubbleClass += isKey ? "bg-amber-500 border-amber-600 text-white font-black" : "border-slate-700 text-slate-500 hover:bg-slate-200";
+                        } else if (mode === 'grading') {
+                          if (isStudent && isKey) bubbleClass += "bg-emerald-600 border-emerald-700 text-white font-black";
+                          else if (isStudent && !isKey) bubbleClass += "bg-rose-600 border-rose-700 text-white font-black";
+                          else if (!isStudent && isKey) bubbleClass += "bg-amber-200 border-amber-500 text-amber-900 font-bold";
+                          else bubbleClass += "border-slate-700 text-slate-500 hover:bg-slate-200";
+                        } else {
+                          bubbleClass += "border-slate-700 text-slate-500 hover:bg-slate-200";
+                        }
+                        return (
+                          <div
+                            key={opt}
+                            onClick={() => handleBubbleClick(qNum, opt)}
+                            className={bubbleClass}
+                          >
+                            {opt}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 ))}

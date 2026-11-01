@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../utils/db';
 import { Calendar, Clock, BookOpen, CheckCircle2, AlertCircle, Printer, Sparkles, Plus, Trash2 } from 'lucide-react';
 
 export default function SmartRevisionPlanner({ customData = {} }) {
@@ -23,14 +24,15 @@ export default function SmartRevisionPlanner({ customData = {} }) {
   const [newDays, setNewDays] = useState(3);
 
   const toggleComplete = (id) => {
-    setRevisionItems(prev => prev.map(item => item.id === id ? { ...item, completed: !item.completed } : item));
+    const updated = revisionItems.map(item => item.id === id ? { ...item, completed: !item.completed } : item);
+saveItems(updated);
   };
 
   const addItem = (e) => {
     e.preventDefault();
     if (!newChapter.trim()) return;
-    setRevisionItems(prev => [
-      ...prev,
+    const updated = [
+      ...revisionItems,
       {
         id: Date.now(),
         chapter: newChapter.trim(),
@@ -39,12 +41,14 @@ export default function SmartRevisionPlanner({ customData = {} }) {
         daysNeeded: Number(newDays) || 3,
         completed: false
       }
-    ]);
+    ];
+    saveItems(updated);
     setNewChapter('');
   };
 
   const removeItem = (id) => {
-    setRevisionItems(prev => prev.filter(item => item.id !== id));
+    const updated = revisionItems.filter(item => item.id !== id);
+saveItems(updated);
   };
 
   // Remaining days to exam

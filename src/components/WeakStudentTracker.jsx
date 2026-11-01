@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../utils/db';
 import { 
   HeartPulse, User, Award, CheckCircle2, AlertTriangle, 
   Plus, Trash2, Printer, Edit3, ShieldAlert, Sparkles, BookOpen
@@ -59,6 +60,9 @@ export default function WeakStudentTracker({
     setTrackingList(updated);
     try {
       localStorage.setItem('bg_weak_student_records', JSON.stringify(updated));
+      if (db && db.settings) {
+        db.settings.put({ key: 'bg_weak_student_records', value: updated });
+      }
     } catch (e) {}
     if (saveToServer) saveToServer({ weakStudentRecords: updated });
   };

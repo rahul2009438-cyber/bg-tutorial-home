@@ -190,6 +190,33 @@ export default function ParentCommunicationLog({ students = [], customData = {} 
             {statusMsg}
           </div>
         )}
+
+        {/* Pagination Controls */}
+        {filteredLogs.length > pageSize && (
+          <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold">
+            <span className="text-slate-500">
+              ?????? {currentPage} / {Math.ceil(filteredLogs.length / pageSize)} (??? {filteredLogs.length} ??)
+            </span>
+            <div className="flex space-x-2">
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                className="px-3 py-1.5 rounded-xl border border-slate-300 disabled:opacity-40 hover:bg-slate-50 transition"
+              >
+                ??????????
+              </button>
+              <button
+                type="button"
+                disabled={currentPage >= Math.ceil(filteredLogs.length / pageSize)}
+                onClick={() => setCurrentPage(p => p + 1)}
+                className="px-3 py-1.5 rounded-xl border border-slate-300 disabled:opacity-40 hover:bg-slate-50 transition"
+              >
+                ???????
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Quick 1-Tap Trigger Section */}
@@ -267,7 +294,7 @@ export default function ParentCommunicationLog({ students = [], customData = {} 
           </div>
         ) : (
           <div className="divide-y divide-slate-100">
-            {filteredLogs.map(log => {
+            {filteredLogs.slice((currentPage - 1) * pageSize, currentPage * pageSize).map(log => {
               const matchedStudent = students.find(s => String(s.studentId || s.id) === String(log.studentId));
               return (
                 <div key={log.id} className="py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs">
@@ -300,6 +327,33 @@ export default function ParentCommunicationLog({ students = [], customData = {} 
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Pagination Controls */}
+        {filteredLogs.length > pageSize && (
+          <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold">
+            <span className="text-slate-500">
+              ?????? {currentPage} / {Math.ceil(filteredLogs.length / pageSize)} (??? {filteredLogs.length} ??)
+            </span>
+            <div className="flex space-x-2">
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                className="px-3 py-1.5 rounded-xl border border-slate-300 disabled:opacity-40 hover:bg-slate-50 transition"
+              >
+                ??????????
+              </button>
+              <button
+                type="button"
+                disabled={currentPage >= Math.ceil(filteredLogs.length / pageSize)}
+                onClick={() => setCurrentPage(p => p + 1)}
+                className="px-3 py-1.5 rounded-xl border border-slate-300 disabled:opacity-40 hover:bg-slate-50 transition"
+              >
+                ???????
+              </button>
+            </div>
           </div>
         )}
       </div>

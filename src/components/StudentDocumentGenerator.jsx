@@ -4,6 +4,7 @@ import {
   Sparkles, Award, Shield, Phone, MapPin, Calendar, QrCode
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { db } from '../utils/db';
 
 export default function StudentDocumentGenerator({ students = [], customData = {} }) {
   const [selectedStudentId, setSelectedStudentId] = useState(
@@ -12,6 +13,28 @@ export default function StudentDocumentGenerator({ students = [], customData = {
   const [docType, setDocType] = useState('id_card'); // 'id_card' | 'admission_form' | 'dossier'
 
   const currentYear = new Date().getFullYear();
+
+  const [, setRefreshKey] = useState(0);
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !student) return;
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = reader.result;
+      try {
+        if (db && db.students && student.id) {
+          await db.students.update(student.id, { avatar: base64 });
+        }
+        student.avatar = base64;
+        setRefreshKey(k => k + 1);
+      } catch (err) {
+        console.warn('Photo save error:', err);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
 
   // Find currently selected student
   const student = students.find(s => String(s.studentId || s.id) === String(selectedStudentId)) || students[0];

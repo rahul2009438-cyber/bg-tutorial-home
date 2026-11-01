@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { 
   CreditCard, DollarSign, Printer, Send, Plus, 
   Trash2, CheckCircle2, User, Search, FileText, ArrowRight

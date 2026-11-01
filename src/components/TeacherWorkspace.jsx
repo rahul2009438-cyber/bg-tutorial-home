@@ -84,6 +84,18 @@ export default function TeacherWorkspace({
   // ================= 1. SECURITY & SELF-DEFENSE BRUTE-FORCE LOCK =================
   const [pinInput, setPinInput] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [showGlobalSearch, setShowGlobalSearch] = useState(false);
+
+  useEffect(() => {
+    const handleGlobalKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setShowGlobalSearch(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKey);
+    return () => window.removeEventListener('keydown', handleGlobalKey);
+  }, []);
   const [pinError, setPinError] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockoutRemaining, setLockoutRemaining] = useState(0);
@@ -1090,6 +1102,45 @@ ${pick(urgencies)}
             </div>
           )}
 
+          {/* ON-SCREEN NUMERIC TOUCH KEYPAD */}
+          <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto pt-1">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+              <button
+                key={num}
+                type="button"
+                onClick={() => {
+                  if (pinInput.length < 6) setPinInput(prev => prev + num);
+                }}
+                className="py-3 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 text-xl font-bold rounded-2xl transition border border-slate-200 shadow-sm"
+              >
+                {num}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setPinInput('')}
+              className="py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-black rounded-2xl transition border border-rose-200"
+            >
+              ?????
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (pinInput.length < 6) setPinInput(prev => prev + '0');
+              }}
+              className="py-3 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 text-xl font-bold rounded-2xl transition border border-slate-200 shadow-sm"
+            >
+              0
+            </button>
+            <button
+              type="button"
+              onClick={() => setPinInput(prev => prev.slice(0, -1))}
+              className="py-3 bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-black rounded-2xl transition border border-amber-200"
+            >
+              ?
+            </button>
+          </div>
+
           <button 
             type="submit"
             className="w-full py-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-700 hover:from-emerald-700 hover:to-indigo-800 text-white rounded-2xl text-base font-black shadow-xl shadow-emerald-600/25 active:scale-95 transition flex items-center justify-center space-x-2"
@@ -1596,6 +1647,40 @@ ${pick(urgencies)}
       {currentTab === 'omr_generator' && (
         <OMRSheetGenerator 
           customData={customData} 
+        />
+      )}
+
+            {currentTab === 'whatsapp_auto_importer' && (
+        <WhatsAppBatchAutoImporter 
+          students={students}
+          setStudents={setStudents}
+          customData={customData}
+          onImportComplete={() => setCurrentTab('unified_batch')} 
+          lang={lang} 
+        />
+      )}
+
+      {currentTab === 'diary_grader' && (
+        <DiaryPhotoAutoGrader 
+          students={students}
+          setStudents={setStudents}
+          customData={customData}
+          onComplete={() => setCurrentTab('unified_batch')} 
+          lang={lang} 
+        />
+      )}
+
+      {currentTab === 'quiz_arena' && (
+        <QuizArena 
+          isTeacherMode={true} 
+          lang={lang} 
+        />
+      )}
+
+      {currentTab === 'notes_docx_studio' && (
+        <StudentNoteAndDocxStudio 
+          isTeacherMode={true} 
+          lang={lang} 
         />
       )}
 
@@ -3756,6 +3841,18 @@ ${pick(urgencies)}
           </div>
         </div>
       )}
+
+          {/* Global Search Command Palette (Ctrl+K) */}
+      <GlobalSearchCommand 
+        isOpen={showGlobalSearch} 
+        onClose={() => setShowGlobalSearch(false)} 
+        onSelectStudent={(st) => {
+          if (st && st.batch) setSelectedBatch(st.batch);
+          if (st && st.name) setStudentSearch(st.name);
+          setCurrentTab('unified_batch');
+          setShowGlobalSearch(false);
+        }} 
+      />
 
     </div>
   );

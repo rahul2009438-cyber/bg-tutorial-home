@@ -5,6 +5,7 @@ import {
   Calendar, CreditCard, Tag, FileText, Search, ShieldCheck
 } from 'lucide-react';
 import { db, logAudit } from '../utils/db';
+import { getLocalIndianDate, getLocalIndianMonth } from '../utils/dateUtils';
 
 export default function CoachingFinancialLedger({ 
   students = [], 
@@ -13,9 +14,7 @@ export default function CoachingFinancialLedger({
 }) {
   const [expenses, setExpenses] = useState([]);
   const [discounts, setDiscounts] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(
-    new Date().toISOString().slice(0, 7) // "2026-10"
-  );
+  const [selectedMonth, setSelectedMonth] = useState(getLocalIndianMonth());
   
   // Expense Form State
   const [showExpenseForm, setShowExpenseForm] = useState(false);
@@ -23,7 +22,7 @@ export default function CoachingFinancialLedger({
     category: 'ঘর ভাড়া (Room Rent)',
     amount: '',
     description: 'দক্ষিণ হাবড়া ক্লাসরুম মাসিক ভাড়া',
-    date: new Date().toISOString().split('T')[0],
+    date: getLocalIndianDate(),
     paymentMode: 'Cash'
   });
 
@@ -105,7 +104,7 @@ export default function CoachingFinancialLedger({
         category: 'জেরক্স ও প্রিন্টিং খরচ (Xerox & Printing)',
         amount: '',
         description: '',
-        date: new Date().toISOString().split('T')[0],
+        date: getLocalIndianDate(),
         paymentMode: 'Cash'
       });
       setShowExpenseForm(false);
