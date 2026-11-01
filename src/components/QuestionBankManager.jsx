@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
   BookOpen, Plus, Search, Filter, Printer, Trash2, 
-  CheckCircle2, Sparkles, FileText, Download, Check, Award,
-  Cpu, RefreshCw, ChevronRight, Zap
+  CheckCircle2, Sparkles, FileText, Download, Check, Award
 } from 'lucide-react';
 import { db, logAudit } from '../utils/db';
-import { 
-  PROCEDURAL_TOPICS, 
-  generateProceduralQuestion 
-} from '../engine/proceduralQuestionEngine';
 
 export default function QuestionBankManager({ customData = {} }) {
   const [questions, setQuestions] = useState([]);
@@ -22,13 +17,7 @@ export default function QuestionBankManager({ customData = {} }) {
   // Selection for custom paper generator
   const [selectedQuestionIds, setSelectedQuestionIds] = useState(new Set());
   const [showTestPaperPreview, setShowTestPaperPreview] = useState(false);
-  const [testPaperTitle, setTestPaperTitle] = useState('ржкрж░рзНржпрж╛ржпрж╝ржХрзНрж░ржорж┐ржХ ржХрзНрж▓рж╛рж╕ ржЯрзЗрж╕рзНржЯ рзирзжрзирзм');
-
-  // Procedural Synthesis Engine State
-  const [showProceduralModal, setShowProceduralModal] = useState(false);
-  const [selectedTopicId, setSelectedTopicId] = useState('ohms_law');
-  const [generatedQuestion, setGeneratedQuestion] = useState(null);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [testPaperTitle, setTestPaperTitle] = useState('ржкрж░рзНржпрж╛рзЯржХрзНрж░ржорж┐ржХ ржХрзНрж▓рж╛рж╕ ржЯрзЗрж╕рзНржЯ рзирзжрзирзм');
 
   // Form State
   const [showAddForm, setShowAddForm] = useState(false);
@@ -65,7 +54,7 @@ export default function QuestionBankManager({ customData = {} }) {
       chapter: 'ржЧрзНржпрж╛рж╕рзЗрж░ ржЖржЪрж░ржг',
       marks: 2,
       difficulty: 'Medium',
-      question: 'ржЪрж╛рж░рзНрж▓рж╕рзЗрж░ рж╕рзВрждрзНрж░ржЯрж┐ ржмрж┐ржмрзГржд ржХрж░рзЛ ржПржмржВ ржкрж░ржо рж╢рзВржирзНржп рждрж╛ржкржорж╛рждрзНрж░рж╛рж░ рж╕ржВржЬрзНржЮрж╛ ржжрж╛ржУред',
+      question: 'ржЪрж╛рж░рзНрж▓рж╕рзЗрж░ рж╕рзВрждрзНрж░ржЯрж┐ ржмрж┐ржмрзГрждрж┐ ржХрж░рзЛ ржПржмржВ ржкрж░ржо рж╢рзВржирзНржп рждрж╛ржкржорж╛рждрзНрж░рж╛рж░ рж╕ржВржЬрзНржЮрж╛ ржжрж╛ржУред',
       answer: 'рж╕рзНржерж┐рж░ ржЪрж╛ржкрзЗ ржирж┐рж░рзНржжрж┐рж╖рзНржЯ ржнрж░рзЗрж░ ржЧрзНржпрж╛рж╕рзЗрж░ ржЖржпрж╝рждржи ржкрзНрж░рждрж┐ ржбрж┐ржЧрзНрж░рж┐ рж╕рзЗрж▓рж╕рж┐ржпрж╝рж╛рж╕ рждрж╛ржкржорж╛рждрзНрж░рж╛ ржмрзГржжрзНржзрж┐ ржмрж╛ рж╣рзНрж░рж╛рж╕рзЗрж░ ржЬржирзНржп 0┬░C рждрж╛ржкржорж╛рждрзНрж░рж╛рж░ ржЖржпрж╝рждржирзЗрж░ 1/273 ржЕржВрж╢ ржмрзГржжрзНржзрж┐ ржмрж╛ рж╣рзНрж░рж╛рж╕ ржкрж╛ржпрж╝ред -273┬░C рждрж╛ржкржорж╛рждрзНрж░рж╛ржХрзЗ ржкрж░ржо рж╢рзВржирзНржп рждрж╛ржкржорж╛рждрзНрж░рж╛ ржмрж▓рзЗред',
       formula: 'V_t = V_0(1 + t/273)'
     },
@@ -77,8 +66,8 @@ export default function QuestionBankManager({ customData = {} }) {
       marks: 3,
       difficulty: 'Medium',
       question: 'рж╕рзНржирзЗрж▓рзЗрж░ рж╕рзВрждрзНрж░ржЯрж┐ рж▓рзЗржЦрзЛред ржЕржмрждрж▓ ржжрж░рзНржкржг ржХрзАржнрж╛ржмрзЗ ржмрж┐ржмрж░рзНржзрж┐ржд ржЕрж╕ржжржмрж┐ржорзНржм ржЧржаржи ржХрж░рзЗ рждрж╛ рж░рж╢рзНржорж┐ржЪрж┐рждрзНрж░рзЗрж░ рж╕рж╛рж╣рж╛ржпрзНржпрзЗ ржжрзЗржЦрж╛ржУред',
-      answer: 'ржкрзНрж░рждрж┐рж╕рж░ржгрзЗрж░ ржжрзНржмрж┐рждрзАржпрж╝ рж╕рзВрждрзНрж░ (рж╕рзНржирзЗрж▓рзЗрж░ рж╕рзВрждрзНрж░): ржирж┐рж░рзНржжрж┐рж╖рзНржЯ ржжрзБржЯрж┐ ржорж╛ржзрзНржпржо ржУ ржирж┐рж░рзНржжрж┐рж╖рзНржЯ ржмрж░рзНржгрзЗрж░ ржЖрж▓рзЛрж░ ржЬржирзНржп ржЖржкрж╛рждржи ржХрзЛржгрзЗрж░ рж╕рж╛ржЗржи ржПржмржВ ржкрзНрж░рждрж┐рж╕рж░ржг ржХрзЛржгрзЗрж░ рж╕рж╛ржЗржирзЗрж░ ржЕржирзБржкрж╛ржд рж╕рж░рзНржмржжрж╛ ржзрзНрж░рзБржмржХред ржмрж╕рзНрждрзБ ржлрзЛржХрж╛рж╕ ржУ ржорзЗрж░рзБрж░ ржорж╛ржЭрзЗ ржерж╛ржХрж▓рзЗ ржмрж┐ржмрж░рзНржзрж┐ржд ржЕрж╕ржжржмрж┐ржорзНржм ржЧржарж┐ржд рж╣ржпрж╝ред',
-      formula: 'sin i / sin r = ╬╝'
+      answer: 'ржкрзНрж░рждрж┐рж╕рж░ржгрзЗрж░ ржжрзНржмрж┐рждрзАрзЯ рж╕рзВрждрзНрж░ (рж╕рзНржирзЗрж▓рзЗрж░ рж╕рзВрждрзНрж░): ржирж┐рж░рзНржжрж┐рж╖рзНржЯ ржжрзБржЯрж┐ ржорж╛ржзрзНржпржо ржУ ржирж┐рж░рзНржжрж┐рж╖рзНржЯ ржмрж░рзНржгрзЗрж░ ржЖрж▓рзЛрж░ ржЬржирзНржп ржЖржкрж╛рждржи ржХрзЛржгрзЗрж░ рж╕рж╛ржЗржи ржПржмржВ ржкрзНрж░рждрж┐рж╕рж░ржг ржХрзЛржгрзЗрж░ рж╕рж╛ржЗржирзЗрж░ ржЕржирзБржкрж╛ржд рж╕рж░рзНржмржжрж╛ ржзрзНрж░рзБржмржХред ржмрж╕рзНрждрзБ ржлрзЛржХрж╛рж╕ ржУ ржорзЗрж░рзБрж░ ржорж╛ржЭрзЗ ржерж╛ржХрж▓рзЗ ржмрж┐ржмрж░рзНржзрж┐ржд ржЕрж╕ржжржмрж┐ржорзНржм ржЧржарж┐ржд рж╣ржпрж╝ред',
+      formula: 'sin i / sin r = \u03bc'
     },
     {
       classLevel: 'Class 10',
@@ -87,7 +76,7 @@ export default function QuestionBankManager({ customData = {} }) {
       chapter: 'ржЪрж▓рждрзЬрж┐рзО (Current Electricity)',
       marks: 3,
       difficulty: 'Hard',
-      question: 'ржУрж╣ржорзЗрж░ рж╕рзВрждрзНрж░ржЯрж┐ ржмрж┐ржмрзГржд ржХрж░рзЛред ржжрзБржЯрж┐ 10 ржУрж╣ржо рж░рзЛржзржХржХрзЗ рж╕ржорж╛ржирзНрждрж░рж╛рж▓ рж╕ржоржмрж╛ржпрж╝рзЗ ржпрзБржХрзНржд ржХрж░рж▓рзЗ рждрзБрж▓рзНржп рж░рзЛржз ржХржд рж╣ржмрзЗ?',
+      question: 'ржУрж╣ржорзЗрж░ рж╕рзВрждрзНрж░ржЯрж┐ ржмрж┐ржмрзГржд ржХрж░рзЛред ржжрзБржЯрж┐ 10 ржУрж╣ржо рж░рзЛржзржХрзЗ рж╕ржорж╛ржирзНрждрж░рж╛рж▓ рж╕ржоржмрж╛ржпрж╝рзЗ ржпрзБржХрзНржд ржХрж░рж▓рзЗ рждрзБрж▓рзНржп рж░рзЛржз ржХржд рж╣ржмрзЗ?',
       answer: 'ржЙрж╖рзНржгрждрж╛ ржУ ржЕржирзНржпрж╛ржирзНржп ржнрзМржд ржЕржмрж╕рзНржерж╛ ржЕржкрж░рж┐ржмрж░рзНрждрж┐ржд ржерж╛ржХрж▓рзЗ ржХрзЛржирзЛ ржкрж░рж┐ржмрж╛рж╣рзАрж░ ржкрзНрж░ржмрж╛рж╣ржорж╛рждрзНрж░рж╛ ржкрж░рж┐ржмрж╛рж╣рзАрж░ ржжрзБржЗ ржкрзНрж░рж╛ржирзНрждрзЗрж░ ржмрж┐ржнржм ржкрзНрж░ржнрзЗржжрзЗрж░ рж╕ржорж╛ржирзБржкрж╛рждрж┐ржХред рж╕ржорж╛ржирзНрждрж░рж╛рж▓ рж╕ржоржмрж╛ржпрж╝рзЗ 1/R = 1/10 + 1/10 = 2/10, ржЕрждржПржм R = 5 ржУрж╣ржоред',
       formula: 'V = IR, 1/R = 1/R1 + 1/R2'
     },
@@ -99,8 +88,8 @@ export default function QuestionBankManager({ customData = {} }) {
       marks: 3,
       difficulty: 'Medium',
       question: 'рж╢рзНрж░рзАржзрж░ ржЖржЪрж╛рж░рзНржпрзЗрж░ рж╕рзВрждрзНрж░рзЗрж░ рж╕рж╛рж╣рж╛ржпрзНржпрзЗ рж╕ржорж╛ржзрж╛ржи ржХрж░рзЛ: 2x┬▓ - 7x + 3 = 0',
-      answer: 'x = [-b ┬▒ тИЪ(b┬▓ - 4ac)] / (2a). ржПржЦрж╛ржирзЗ a=2, b=-7, c=3. ржирж┐рж░рзВржкржХ = 49 - 24 = 25. ржЕрждржПржм x = (7 ┬▒ 5)/4 тЗТ x = 3 ржЕржержмрж╛ x = 1/2.',
-      formula: 'x = (-b ┬▒ тИЪ(b┬▓ - 4ac)) / (2a)'
+      answer: 'x = [-b \u00b1 \u221a(b\u00b2 - 4ac)] / (2a). ржПржЦрж╛ржирзЗ a=2, b=-7, c=3. ржирж┐рж░рзВржкржХ = 49 - 24 = 25. ржЕрждржПржм x = (7 \u00b1 5)/4 \u21d2 x = 3 ржЕржержмрж╛ x = 1/2.',
+      formula: 'x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / (2a)'
     },
     {
       classLevel: 'Class 10',
@@ -111,7 +100,7 @@ export default function QuestionBankManager({ customData = {} }) {
       difficulty: 'Hard',
       question: 'ржкрзНрж░ржорж╛ржг ржХрж░рзЛ ржпрзЗ, ржмрзГрждрзНрждрзЗрж░ ржХрзЛржирзЛ ржмрж┐ржирзНржжрзБрждрзЗ рж╕рзНржкрж░рзНрж╢ржХ ржУ рж╕рзНржкрж░рзНрж╢ржмрж┐ржирзНржжрзБржЧрж╛ржорзА ржмрзНржпрж╛рж╕рж╛рж░рзНржз ржкрж░рж╕рзНржкрж░ рж▓ржорзНржмржнрж╛ржмрзЗ ржЕржмрж╕рзНржерж╛ржи ржХрж░рзЗред',
       answer: 'ржЙржкржкрж╛ржжрзНржп рзкрзж тАФ ржкрж╛ржарзНржпржкрзБрж╕рзНрждржХрзЗрж░ ржкрзНрж░ржорж╛ржг ржЕржирзБржпрж╛рзЯрзА рж╕рзНржкрж░рзНрж╢ржХрзЗрж░ ржЙржкрж░ ржпрзЗржХрзЛржирзЛ ржЕржкрж░ ржмрж┐ржирзНржжрзБ ржмрзГрждрзНрждрзЗрж░ ржмрж╛ржЗрж░рзЗ ржЕржмрж╕рзНржерж┐рждред рж╕рзБрждрж░рж╛ржВ рж╕рзНржкрж░рзНрж╢ржмрж┐ржирзНржжрзБржЧрж╛ржорзА ржмрзНржпрж╛рж╕рж╛рж░рзНржзржЗ ржХрзНрж╖рзБржжрзНрж░рждржо ржжрзВрж░рждрзНржм ржПржмржВ рждрж╛ рж╕рзНржкрж░рзНрж╢ржХрзЗрж░ ржУржкрж░ рж▓ржорзНржмред',
-      formula: 'OP тКе AB'
+      formula: 'OP \u22a5 AB'
     }
   ];
 
@@ -136,43 +125,6 @@ export default function QuestionBankManager({ customData = {} }) {
     }
   };
 
-  const handleSynthesizeQuestion = () => {
-    setIsGenerating(true);
-    try {
-      const q = generateProceduralQuestion(selectedTopicId);
-      setGeneratedQuestion(q);
-    } catch (err) {
-      console.error('Synthesis error:', err);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleSaveProceduralToBank = async () => {
-    if (!generatedQuestion) return;
-    try {
-      await db.questionBank.add({
-        classLevel: generatedQuestion.classLevel.includes('Class 10') ? 'Class 10' : generatedQuestion.classLevel.includes('Class 8') ? 'Class 8' : 'Class 9',
-        board: 'WBBSE',
-        subject: generatedQuestion.subject || 'Physical Science',
-        chapter: generatedQuestion.title,
-        marks: generatedQuestion.marks || 2,
-        difficulty: 'Medium',
-        question: generatedQuestion.question,
-        answer: generatedQuestion.correctAnswer || (generatedQuestion.solutionSteps || []).join(' | '),
-        formula: generatedQuestion.solutionSteps?.[0] || ''
-      });
-      await logAudit('QUESTION_SYNTHESIZED_SAVED', 'QUESTION_BANK', generatedQuestion.title);
-      setStatusMsg('тЬЕ ржХрзГрждрзНрж░рж┐ржо ржкрзНрж░рж╢рзНржиржЯрж┐ рж╕ржлрж▓ржнрж╛ржмрзЗ ржЖржкржирж╛рж░ рж╕рзНржерж╛ржпрж╝рзА ржкрзНрж░рж╢рзНржиржнрж╛ржгрзНржбрж╛рж░рзЗ рж╕ржВрж░ржХрзНрж╖рж┐ржд рж╣ржпрж╝рзЗржЫрзЗ!');
-      setTimeout(() => setStatusMsg(''), 3000);
-      setShowProceduralModal(false);
-      setGeneratedQuestion(null);
-      loadQuestions();
-    } catch (err) {
-      alert('рж╕ржВрж░ржХрзНрж╖ржг ржмрзНржпрж░рзНрже: ' + err.message);
-    }
-  };
-
   const handleAddQuestion = async (e) => {
     e.preventDefault();
     if (!newQ.question) return;
@@ -183,12 +135,12 @@ export default function QuestionBankManager({ customData = {} }) {
         marks: Number(newQ.marks) || 1
       });
       await logAudit('QUESTION_ADDED', 'QUESTION_BANK', `${newQ.chapter} (${newQ.marks} marks)`);
-      setStatusMsg('тЬЕ ржкрзНрж░рж╢рзНржи рж╕ржлрж▓ржнрж╛ржмрзЗ ржкрзНрж░рж╢рзНржиржнрж╛ржгрзНржбрж╛рж░рзЗ ржпрзБржХрзНржд рж╣ржпрж╝рзЗржЫрзЗ!');
+      setStatusMsg('тЬЕ ржкрзНрж░рж╢рзНржи рж╕ржлрж▓ржнрж╛ржмрзЗ ржкрзНрж░рж╢рзНржиржнрж╛ржгрзНржбрж╛рж░рзЗ ржпрзБржХрзНржд рж╣рзЯрзЗржЫрзЗ!');
       setTimeout(() => setStatusMsg(''), 3000);
       setNewQ({
         classLevel: 'Class 10',
         board: 'WBBSE',
-      subject: 'Physical Science',
+        subject: 'Physical Science',
         chapter: '',
         marks: 2,
         difficulty: 'Medium',
@@ -197,9 +149,9 @@ export default function QuestionBankManager({ customData = {} }) {
         formula: ''
       });
       setShowAddForm(false);
-      locadQuestions();
+      loadQuestions();
     } catch (err) {
-      alert('ржирж╢рзНржи ржкрзНрж░рж╢рзНржи рж╕ржВрж░ржХрзНрж╖ржг ржмрзНржпрж░рзНрже: ' + err.message);
+      alert('ржкрзНрж░рж╢рзНржи рж╕ржВрж░ржХрзНрж╖ржг ржмрзНржпрж░рзНрже: ' + err.message);
     }
   };
 
@@ -255,25 +207,13 @@ export default function QuestionBankManager({ customData = {} }) {
             <BookOpen className="w-3.5 h-3.5" />
             <span>ржкрзНрж░рж╢рзНржи ржнрж╛ржгрзНржбрж╛рж░ ржУ рж╕рзНржорж╛рж░рзНржЯ ржкрзНрж░рж╢рзНржиржкрждрзНрж░ ржорзЗржХрж╛рж░ тАв QUESTION REPOSITORY</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black">рж╢рзНрж░рзЗржгрж┐ржнрж┐рждрзНрждрж┐ржХ ржЕржзрзНржпрж╛ржпрж╝ ржЕржирзБржпрж╛ржпрж╝рзА ржХрзНржпрж╛ржЯрж╛ржЧрж░рж╛ржЗржЬржб ржкрзНрж░рж╢рзНржи ржмрзНржпрж╛ржВржХ</h2>
+          <h2 className="text-xl sm:text-2xl font-black">рж╢рзНрж░рзЗржгрж┐ржнрж┐рждрзНрждрж┐ржХ ржЕржзрзНржпрж╛рзЯ ржЕржирзБржпрж╛рзЯрзА ржХрзНржпрж╛ржЯрж╛ржЧрж░рж╛ржЗржЬржб ржкрзНрж░рж╢рзНржи ржмрзНржпрж╛ржЩрзНржХ</h2>
           <p className="text-xs text-indigo-100 mt-1 max-w-xl">
             WBBSE / WBCHSE ржорж╛ржзрзНржпржорж┐ржХ ржУ ржПржХрж╛ржжрж╢-ржжрзНржмрж╛ржжрж╢ рж╢рзНрж░рзЗржгрж┐рж░ ржкржжрж╛рж░рзНржержмрж┐ржЬрзНржЮрж╛ржи ржУ ржЧржгрж┐рждрзЗрж░ ржкрзНрж░рж╢рзНржи ржлрж┐рж▓рзНржЯрж╛рж░ ржХрж░рзБржи ржПржмржВ рзз-ржХрзНрж▓рж┐ржХрзЗ ржЯрзЗрж╕рзНржЯ рж╢рж┐ржЯ рждрзИрж░рж┐ ржХрж░рзБржиред
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => {
-              setShowProceduralModal(true);
-              if (!generatedQuestion) handleSynthesizeQuestion();
-            }}
-            className="px-4 py-2.5 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-xs flex items-center space-x-1.5 shadow-md transition active:scale-95"
-          >
-            <Cpu className="w-4 h-4 text-slate-950" />
-            <span>тЪб ржкрзНрж░рж╕рж┐ржбрж┐ржЙрж░рж╛рж▓ ржХрзЛрж╢рзНржЪрзЗржи ржЗржЮрзНржЬрж┐ржи</span>
-          </button>
-
           <button
             type="button"
             onClick={() => setShowAddForm(!showAddForm)}
@@ -293,116 +233,6 @@ export default function QuestionBankManager({ customData = {} }) {
           </button>
         </div>
       </div>
-
-      {statusMsg && (
-        <div className="p-3 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-2xl animate-fadeIn">
-          {statusMsg}
-        </div>
-      )}
-
-      {/* Procedural Question Synthesizer Modal / Panel */}
-      {showProceduralModal && (
-        <div className="bg-slate-900 text-white p-6 rounded-3xl border border-cyan-500/40 shadow-xl space-y-4 print:hidden animate-fadeIn">
-          <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-            <div className="flex items-center space-x-2">
-              <Zap className="w-5 h-5 text-cyan-400" />
-              <h3 className="font-black text-sm text-cyan-200">
-                ржкрзНрж░рж╕рж┐ржбрж┐ржЙрж░рж╛рж▓ рж░рж┐ржпрж╝рзЗрж▓-ржЯрж╛ржЗржо ржкрзНрж░рж╢рзНржи рж╕ржВрж╢рзНрж▓рзЗрж╖ржг ржЗржЮрзНржЬрж┐ржи (Procedural Math & Physics Engine)
-              </h3>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowProceduralModal(false)}
-              className="text-xs text-slate-400 hover:text-white"
-            >
-              тЬХ ржмржирзНржз ржХрж░рзБржи
-            </button>
-          </div>
-
-          <p className="text-xs text-slate-300 leading-relaxed">
-            ржЧрж╛ржгрж┐рждрж┐ржХ ржУ ржмрзИржЬрзНржЮрж╛ржирж┐ржХ рж╕рзВрждрзНрж░рж╛ржирзБржпрж╛ржпрж╝рзА рж╕рзНржмржпрж╝ржВржХрзНрж░рж┐ржпрж╝ржнрж╛ржмрзЗ ржкрж░рж┐ржмрж░рзНрждржирж╢рзАрж▓ рж╕ржВржЦрзНржпрж╛ржпрзБржХрзНржд рж╕ржорзНржкрзВрж░рзНржг ржирж┐рж░рзНржнрзБрж▓ ржкрзНрж░рж╢рзНржи ржУ рж╕рзНржЯрзЗржк-ржмрж╛ржЗ-рж╕рзНржЯрзЗржк ржмрж╛ржВрж▓рж╛ рж╕ржорж╛ржзрж╛ржи рждрзИрж░рж┐ ржХрж░рзБржиред
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-            <div className="sm:col-span-2">
-              <label className="text-xs font-bold text-slate-400 block mb-1">ржЯржкрж┐ржХ ржирж┐рж░рзНржмрж╛ржЪржи ржХрж░рзБржи</label>
-              <select
-                value={selectedTopicId}
-                onChange={(e) => setSelectedTopicId(e.target.value)}
-                className="w-full p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-cyan-300"
-              >
-                {PROCEDURAL_TOPICS.map(t => (
-                  <option key={t.id} value={t.id}>
-                    {t.name} ({t.classLevel})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-end">
-              <button
-                type="button"
-                onClick={handleSynthesizeQuestion}
-                disabled={isGenerating}
-                className="w-full p-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs flex items-center justify-center space-x-1.5 shadow-md transition active:scale-95 disabled:opacity-50"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
-                <span>ржирждрзБржи рж╕ржВржЦрзНржпрж╛ ржжрж┐ржпрж╝рзЗ рждрзИрж░рж┐ ржХрж░рзБржи</span>
-              </button>
-            </div>
-          </div>
-
-          {generatedQuestion && (
-            <div className="mt-4 p-4 rounded-2xl bg-slate-800/80 border border-cyan-500/30 space-y-3">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-black text-cyan-300">
-                  {generatedQuestion.title} тАв {generatedQuestion.classLevel}
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-bold border border-cyan-700/50">
-                  {generatedQuestion.type} ({generatedQuestion.marks} Marks)
-                </span>
-              </div>
-
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 text-sm font-bold text-white leading-relaxed">
-                {generatedQuestion.question}
-              </div>
-
-              {generatedQuestion.options && (
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  {generatedQuestion.options.map((opt, i) => (
-                    <div key={i} className="p-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-slate-300">
-                      ({String.fromCharCode(65 + i)}) {opt}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800/50 text-xs text-emerald-200 space-y-1">
-                <span className="font-bold text-emerald-300 block">рж╕ржарж┐ржХ ржЙрждрзНрждрж░ ржУ рж╕ржорж╛ржзрж╛ржи ржзрж╛ржк:</span>
-                <p className="font-bold text-white">{generatedQuestion.correctAnswer}</p>
-                {generatedQuestion.solutionSteps && (
-                  <ul className="list-disc list-inside space-y-0.5 text-emerald-300/80 text-[11px] pt-1">
-                    {generatedQuestion.solutionSteps.map((step, idx) => (
-                      <li key={idx}>{step}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <div className="flex justify-end pt-2">
-                <button
-                  type="button"
-                  onClick={handleSaveProceduralToBank}
-                  className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs shadow-md transition active:scale-95 flex items-center space-x-1.5"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>ржкрзНрж░рж╢рзНржиржнрж╛ржгрзНржбрж╛рж░рзЗ рж╕рзЗржн ржХрж░рзБржи</span>
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Add Form (Print Hidden) */}
       {showAddForm && (
@@ -439,20 +269,20 @@ export default function QuestionBankManager({ customData = {} }) {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-600 block mb-1">ржмрж┐рж╖ржпрж╝</label>
+              <label className="text-xs font-bold text-slate-600 block mb-1">ржмрж┐рж╖рзЯ</label>
               <select
                 value={newQ.subject}
-                onChange={(e) => setNewQ({ ...newQ, subject: e.target.value)}
+                onChange={(e) => setNewQ({ ...newQ, subject: e.target.value })}
                 className="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-bold bg-white text-slate-900"
               >
-                  <option value="Physical Science">ржнрзМрждржмрж┐ржЬрзНржЮрж╛ржи (Physical Science)</option>
+                <option value="Physical Science">ржнрзМрждржмрж┐ржЬрзНржЮрж╛ржи (Physical Science)</option>
                 <option value="Mathematics">ржЧржгрж┐ржд (Mathematics)</option>
                 <option value="Life Science">ржЬрзАржмржиржмрж┐ржЬрзНржЮрж╛ржи (Life Science)</option>
               </select>
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-600 block mb-1">ржЕржзрзНржпрж╛ржпрж╝ / ржЪрзНржпрж╛ржкрзНржЯрж╛рж░</label>
+              <label className="text-xs font-bold text-slate-600 block mb-1">ржЕржзрзНржпрж╛рзЯ / ржЪрзНржпрж╛ржкрзНржЯрж╛рж░</label>
               <input
                 type="text"
                 placeholder="ржпрзЗржоржи: ржЧрзНржпрж╛рж╕рзЗрж░ ржЖржЪрж░ржг / ржЖрж▓рзЛ / рж╕ржорзАржХрж░ржг"
@@ -478,7 +308,6 @@ export default function QuestionBankManager({ customData = {} }) {
             </div>
 
             <div>
-            <div>
               <label className="text-xs font-bold text-slate-600 block mb-1">ржХрж╛ржарж┐ржирзНржп (Difficulty)</label>
               <select
                 value={newQ.difficulty}
@@ -495,7 +324,7 @@ export default function QuestionBankManager({ customData = {} }) {
               <label className="text-xs font-bold text-slate-600 block mb-1">ржкрзНрж░рж╢рзНржи</label>
               <textarea
                 rows={2}
-                placeholder="ржкрзНрж░рж╢рзНржирзЗрж░ ржмржпрж╝рж╛ржи ржмрж╛ржВрж▓рж╛ржпрж╝ рж▓рж┐ржЦрзБржи..."
+                placeholder="ржкрзНрж░рж╢рзНржирзЗрж░ ржмрзЯрж╛ржи ржмрж╛ржВрж▓рж╛рзЯ рж▓рж┐ржЦрзБржи..."
                 value={newQ.question}
                 onChange={(e) => setNewQ({ ...newQ, question: e.target.value })}
                 className="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-medium bg-white text-slate-900"
@@ -507,7 +336,7 @@ export default function QuestionBankManager({ customData = {} }) {
               <label className="text-xs font-bold text-slate-600 block mb-1">ржоржбрзЗрж▓ ржЙрждрзНрждрж░ / рж╣рж┐ржирзНржЯ</label>
               <input
                 type="text"
-                placeholder="рж╕ржВржХрзНрж╖рж┐ржкрзНржд рж╕ржорж╛ржзрж╛ржи ржмрж╛ ржЙрждрзНрждрж░рзЗрж░ ржорзВрж▓ ржкржпрж╝рзЗржирзНржЯ..."
+                placeholder="рж╕ржВржХрзНрж╖рж┐ржкрзНржд рж╕ржорж╛ржзрж╛ржи ржмрж╛ ржЙрждрзНрждрж░рзЗрж░ ржорзВрж▓ ржкрзЯрзЗржирзНржЯ..."
                 value={newQ.answer}
                 onChange={(e) => setNewQ({ ...newQ, answer: e.target.value })}
                 className="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-medium bg-white text-slate-900"
@@ -545,11 +374,11 @@ export default function QuestionBankManager({ customData = {} }) {
       )}
 
       {/* Filter Bar (Print Hidden) */}
-      <div className="bg-slate-100 p-4 rounded-3xl flew flex-wrap items-center gap-3 text-xs print:hidden">
+      <div className="bg-slate-100 p-4 rounded-3xl flex flex-wrap items-center gap-3 text-xs print:hidden">
         <div className="flex-1 min-w-[200px]">
           <input
             type="text"
-            placeholder="ржкрзНрж░рж╢рзНржи ржмрж╛ ржЕржзрзНржпрж╛ржпрж╝ ржЕржирзБрж╕ржирзНржзрж╛ржи..."
+            placeholder="ржкрзНрж░рж╢рзНржи ржмрж╛ ржЕржзрзНржпрж╛рзЯ ржЕржирзБрж╕ржирзНржзрж╛ржи..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full p-2 px-3 rounded-xl border border-slate-300 bg-white text-slate-900"
@@ -572,7 +401,7 @@ export default function QuestionBankManager({ customData = {} }) {
           onChange={(e) => setFilterSubject(e.target.value)}
           className="p-2 rounded-xl border border-slate-300 bg-white font-bold text-slate-700"
         >
-          <option value="All">рж╕ржХрж▓ ржмрж┐рж╖ржпрж╝</option>
+          <option value="All">рж╕ржХрж▓ ржмрж┐рж╖рзЯ</option>
           <option value="Physical Science">ржнрзМрждржмрж┐ржЬрзНржЮрж╛ржи</option>
           <option value="Mathematics">ржЧржгрж┐ржд</option>
           <option value="Life Science">ржЬрзАржмржиржмрж┐ржЬрзНржЮрж╛ржи</option>
@@ -637,12 +466,12 @@ export default function QuestionBankManager({ customData = {} }) {
           {/* Institutional Header */}
           <div className="text-center border-b-2 border-slate-900 pb-4 space-y-1">
             <h1 className="text-2xl font-black text-slate-900 tracking-wide">B.G. TUTORIAL HOME</h1>
-            <p className="text-xs text-slate-600 font-medium">рж╢рж┐ржХрзНрж╖ржХ: ржмрж╛ржкрзБржи ржШрзЛрж╖ тАв ржжржХрзНрж╖рж┐ржг рж╣рж╛ржмржбрж╝рж╛, ржЙрждрзНрждрж░ рзирзк ржкрж░ржЧржирж╛ тАв ржлрзЛржи: {customData.phone || '9733974425'}</p>
+            <p className="text-xs text-slate-600 font-medium">рж╢рж┐ржХрзНрж╖ржХ: ржмрж╛ржкрзБржи ржШрзЛрж╖ тАв ржжржХрзНрж╖рж┐ржг рж╣рж╛ржмрзЬрж╛, ржЙрждрзНрждрж░ рзирзк ржкрж░ржЧржирж╛ тАв ржлрзЛржи: {customData.phone || '9733974425'}</p>
             <div className="pt-2 flex justify-between items-center text-xs font-bold text-slate-800 border-t border-slate-200 mt-2">
               <span>{testPaperTitle}</span>
               <span>рж╢рзНрж░рзЗржгрж┐: {filterClass}</span>
               <span>ржкрзВрж░рзНржгржорж╛ржи: {totalPaperMarks}</span>
-              <span>рж╕ржоржпрж╝: {totalPaperMarks > 20 ? 'рзз ржШржгрзНржЯрж╛' : 'рзйрзж ржорж┐ржирж┐ржЯ'}</span>
+              <span>рж╕ржорзЯ: {totalPaperMarks > 20 ? 'рзз ржШржгрзНржЯрж╛' : 'рзйрзж ржорж┐ржирж┐ржЯ'}</span>
             </div>
           </div>
 
@@ -656,7 +485,7 @@ export default function QuestionBankManager({ customData = {} }) {
           {/* Questions List */}
           <div className="space-y-4 text-xs leading-relaxed">
             {selectedQuestionsList.map((q, idx) => (
-              <div key={q.id} className="flex items-center justify-between gap-4">
+              <div key={q.id} className="flex justify-between items-start gap-4">
                 <div className="space-y-1">
                   <div className="text-slate-900 font-medium">
                     <span className="font-extrabold mr-2">{idx + 1}.</span>
@@ -678,4 +507,95 @@ export default function QuestionBankManager({ customData = {} }) {
           {/* Model Answer Key & Marking Scheme (Print Optional) */}
           <div className="mt-8 pt-4 border-t-2 border-slate-800 text-xs space-y-2">
             <span className="font-black text-slate-900 block uppercase tracking-wider text-[11px]">
-              рж╢рж┐ржХрзНрж╖ржХ ржорЪЗВЮВЪ╚ГВЪ'ВЪУВЮ7ВЪУВЪ└ГВЪLГВЪ╗ВЪ√ВЪ├ВЮ7ВЪWВЪ ВЪГВЪуВЮ7ВЪWВЪ ВЪ╕АбQ!HЭLБ9M]HБ-dдш(ААААААААААААЁ╜═┴Е╕°(ААААААААААААёСе╪БН▒Е══9Е╡ФЇЙЭ╔еРБЭ╔еР╡Н╜▒╠┤─Б═┤щЭ╔еР╡Н╜▒╠┤╚БЭЕ└┤╠Б╤Хс╨╡l─┼┴сtБ╤Хс╨╡═▒Е╤Ф┤╪└└И°(АААААААААААААБэ═Х▒ХН╤ХСE╒Х═╤е╜╣═1е═╨╣╡Е└аб─░БеСрдАЇ°Аа(ААААААААААААААААёСе╪БнХфїэеСсЇБН▒Е══9Е╡ФЇЙ└┤╚╕╘БЙЬ╡═▒Е╤Ф┤╘└Б╔╜╒╣СХР╡с░БЙ╜╔СХ╚БЙ╜╔СХ╚╡═▒Е╤Ф┤╚└└Б═┴ЕНФ╡ф┤└╕╘И°(ААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙЩ╜╣╨╡Й╜▒РБ╤Хс╨╡═▒Е╤Ф┤ф└└И∙эеСрАмА┼Ї╕Бэ─╣НбЕ┴╤Х╔ЇАбэ─╣╡Е╔н═ЇГВЪгВЪ╗ВЮ7ВЪ│ВЪ└дшЁ╜═┴Е╕°(ААААААААААААААААААё└БН▒Е══9Е╡ФЇЙ╤Хс╨╡═▒Е╤Ф┤▄└└И∙э─╣Е╣═▌Х╚БёЁАЯВЪ│ВЪ ВЪ█ВЪШГВЪ│ВЪ ВЪ│ВЪ├ВЪМГВЪWВЮ7ВЪ╦ВЪ√ВЪуВЮГВЪВЪ╦ВЮ/ВЪkВЪ ВЪРГВЪчВЮВЮВЪoВЮВЦРЭЇЁ╜└°(ААААААААААААААААЁ╜Се╪°(ААААААААААААААдеЇ(ААААААААААААЁ╜Се╪°(ААААААААААЁ╜Се╪°(ААААААААЁ╜Се╪°(ААААААеЇ((АААААБь╝иБE╒Х═╤е╜╣╠БIХ┴╜═е╤╜╔фБ1е═╨Аи╜Ї(ААААААёСе╪БН▒Е══9Е╡ФЇЙЙЬ╡▌бе╤ФБ└┤╪Б╔╜╒╣СХР┤═с░БЙ╜╔СХ╚БЙ╜╔СХ╚╡═▒Е╤Ф┤╚└└Б═бЕС╜▄╡═┤Б═┴ЕНФ╡ф┤╨И°(ААААААААёСе╪БН▒Е══9Е╡ФЇЙЩ▒ХрБй╒═╤еЩф╡ЙХ╤▌ХХ╕Бе╤Х╡╠╡НХ╣╤Х╚И°(ААААААААААёа╠БН▒Е══9Е╡ФЇЙЩ╜╣╨╡Й▒ЕНмБ╤Хс╨╡═▒Е╤Ф┤ф└└Б╤Хс╨╡═┤БЩ▒ХрБе╤Х╡╠╡НХ╣╤Х╚Б═┴ЕНФ╡р┤╚И°(ААААААААААААё	╜╜н=┴Х╕БН▒Е══9Е╡ФЇЙ▄┤╨Ба┤╨Б╤Хс╨╡е╣СеЭ╝┤╪└└ИА╝°(ААААААААААААё═┴Е╕√ВЪуВЪВЪ├ВЪWВЮ7ВЪ▀ВЪ ВЪРГВЪлВЮ7ВЪ├ВЪ█ВЮ7ВЪаГВЪ╖ВЪ√ВЪПВЮ7ВЪЗВЪ√ВЪ└АбэЩе▒╤Х╔ХСE╒Х═╤е╜╣╠╣▒Х╣Э╤бЇГВЪВЪ№ГВЪлВЮ7ВЪ├ВЪ█ВЮ7ВЪадЁ╜═┴Е╕°(ААААААААААЁ╜а╠°(ААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙ╤Хс╨╡с╠Б╤Хс╨╡═▒Е╤Ф┤╘└└И°(АААААААААААГВЪлВЮ7ВЪ├ВЪ█ВЮ7ВЪаГВЪ│ВЪ√ВЪoВЪ√ВЪГВЪWВЪ├ВЪУВЮГВЪлВЪ√ВЪ█ВЮВЪ└ГВЪkВЮВЪWВЪ│ВЪWВЮ7ВЪуВЮГВЪWВЮ7ВЪ╦ВЪ ВЪTГВЪWВЪ├ВЮВЪа(ААААААААААЁ╜═┴Е╕°(ААААААААЁ╜Се╪°((АААААААБэЩе▒╤Х╔ХСE╒Х═╤е╜╣╠╣▒Х╣Э╤аАЇЇЇА└А№Аа(ААААААААААёСе╪БН▒Е══9Е╡ФЇЙ└┤рБ╤Хс╨╡НХ╣╤Х╚Б╤Хс╨╡═▒Е╤Ф┤╨└└Б╤Хс╨╡с╠БЩ╜╣╨╡Й╜▒РБЙЬ╡═▒Е╤Ф┤╘└Б╔╜╒╣СХР┤╔с░БЙ╜╔СХ╚БЙ╜╔СХ╚╡═▒Е╤Ф┤╚└└И°(АААААААААААГВЪ?ВЪГВЪпВЪ ВЪ╦ВЮ7ВЪВЪ√ВЪ├ВЮГВЪWВЮ/ВЪгВЮ,ГВЪлВЮ7ВЪ├ВЪ█ВЮ7ВЪаГВЪлВЪ√ВЪOВЮВЪ°ГВЪ┐ВЪ√ВЮВЪгВЪ ВЦРГВЪгВЪУВЮВЪаГВЪлВЮ7ВЪ├ВЪ█ВЮ7ВЪаГВЪ┐ВЮВЪWВЮ7ВЪРГВЪWВЪ├ВЪУВЮГВЪ'ВЪлВЪ├ВЮВЪ└ГВЪ│ВЪ√ВЪВЪгВЮГВЪWВЮ7ВЪ╦ВЪ ВЪTГВЪWВЪ├ВЮВЪгВЦР(ААААААААААЁ╜Се╪°(ААААААААдАшАа(ААААААААААёСе╪БН▒Е══9Е╡ФЇЙСе┘еСФ╡фБСе┘еСФ╡═▒Е╤Ф┤─└└И°(АААААААААААБэЩе▒╤Х╔ХСE╒Х═╤е╜╣╠╣╡Е└аб─дАЇ°Бь(АААААААААААААБН╜╣═╨Бе═MХ▒ХН╤ХРАЇБ═Х▒ХН╤ХСE╒Х═╤е╜╣%С╠╣бЕ╠б─╣еРдь(АААААААААААААБ╔Х╤╒╔╕Аа(ААААААААААААААААёСе╪БнХфїэ─╣еСЇБН▒Е══9Е╡ФЇЙ┴ф┤╠╕╘БЩ▒ХрБе╤Х╡╠╡═╤Е╔╨Бй╒═╤еЩф╡ЙХ╤▌ХХ╕БЭЕ└┤╠Б╤Хс╨╡с╠Бб╜┘Х╚щЙЬ╡═▒Е╤Ф┤╘└╝▄└Б└┤╚Б╔╜╒╣СХР┤╔с░Б╤╔Е╣═е╤е╜╕И°(ААААААААААААААААААёСе╪БН▒Е══9Е╡ФЇЙЩ▒ХрБе╤Х╡╠╡═╤Е╔╨Б═┴ЕНФ╡р┤╠И°(ААААААААААААААААААААёе╣┴╒╨(АААААААААААААААААААААБ╤х┴ФЇЙНбХНнЙ╜рИ(АААААААААААААААААААААБНбХНнХРїэе═MХ▒ХН╤ХСЇ(АААААААААААААААААААААБ╜╣бЕ╣ЭФїьадАЇ°Б╤╜ЭЭ▒ХMХ▒ХН╤E╒Х═╤е╜╕б─╣еРеЇ(АААААААААААААААААААААБН▒Е══9Е╡ФЇЙ╡╨┤─Б╔╜╒╣СХРБ╤Хс╨╡е╣СеЭ╝┤╪└└Б▄┤╨Ба┤╨БН╒╔═╜╚╡┴╜е╣╤Х╚И(АААААААААААААААААААА╝°(ААААААААААААААААААААёСе╪БН▒Е══9Е╡ФЇЙ═┴ЕНФ╡ф┤─И°(ААААААААААААААААААААААёСе╪БН▒Е══9Е╡ФЇЙЩ▒ХрБЩ▒Хр╡▌╔Е└Бе╤Х╡╠╡НХ╣╤Х╚БЭЕ└┤─╕╘И°(ААААААААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙ┴р┤╚Б┴ф┤└╕╘Б╔╜╒╣СХРБЙЬ╡е╣СеЭ╝┤─└└Б╤Хс╨╡е╣СеЭ╝┤р└└Б╤Хс╨╡l─┴┴сtБЩ╜╣╨╡Й▒ЕНмИ°(АААААААААААААААААААААААААБэ─╣Н▒Е══1Х┘Х▒Ї(ААААААААААААААААААААААААЁ╜═┴Е╕°(ААААААААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙ┴р┤╚Б┴ф┤└╕╘Б╔╜╒╣СХРБЙЬ╡═▒Е╤Ф┤─└└Б╤Хс╨╡═▒Е╤Ф┤▄└└Б╤Хс╨╡l─┴┴сtБЩ╜╣╨╡Й╜▒РИ°(АААААААААААААААААААААААААБэ─╣═╒ЙйХН╤Ї(ААААААААААААААААААААААААЁ╜═┴Е╕°(ААААААААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙ┴р┤╚Б┴ф┤└╕╘Б╔╜╒╣СХРБЙЬ╡Е╡ЙХ╚┤─└└Б╤Хс╨╡Е╡ЙХ╚┤ф└└Б╤Хс╨╡l─┴┴сtБЩ╜╣╨╡Й╜▒РИ°(АААААААААААААААААААААААААБэ─╣НбЕ┴╤Х╔Ї(ААААААААААААААААААААААААЁ╜═┴Е╕°(ААААААААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙ┴р┤╚Б┴ф┤└╕╘Б╔╜╒╣СХРБЙЬ╡┴╒╔┴▒Ф┤─└└Б╤Хс╨╡┴╒╔┴▒Ф┤р└└Б╤Хс╨╡l─┴┴сtБЩ╜╣╨╡Й▒ЕНмИ°(АААААААААААААААААААААААААБэ─╣╡Е╔н═ЇГВЪгВЪ╗ВЮ7ВЪ│ВЪ└(ААААААААААААААААААААААААЁ╜═┴Е╕°(ААААААААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФїэБ┴р┤╚Б┴ф┤└╕╘Б╔╜╒╣СХРБ╤Хс╨╡l─┴┴сtБЩ╜╣╨╡Й╜▒РАСь(АААААААААААААААААААААААААБ─╣СеЩЩеН╒▒╤фАЇЇЇАЭЕ═фЬА№АЭЙЬ╡Х╡Х╔Е▒Р┤─└└Б╤Хс╨╡Х╡Х╔Е▒Р┤р└└ЬАш(АААААААААААААААААААААААААБ─╣СеЩЩеН╒▒╤фАЇЇЇАЭ5ХСе╒┤ЬА№АЭЙЬ╡Й▒╒Ф┤─└└Б╤Хс╨╡Й▒╒Ф┤р└└ЬАшАЭЙЬ╡╔╜═Ф┤─└└Б╤Хс╨╡╔╜═Ф┤р└└Ь(АААААААААААААААААААААААБїБЇ°(АААААААААААААААААААААААААБэ─╣СеЩЩеН╒▒╤хЇ(ААААААААААААААААААААААААЁ╜═┴Е╕°(ААААААААААААААААААААААЁ╜Се╪°(ААААААААААААААААААААААё└БН▒Е══9Е╡ФЇЙЩ╜╣╨╡Хс╤╔ЕЙ╜▒РБ╤Хс╨╡═▒Е╤Ф┤ф└└Б╤Хс╨╡═┤Б╡╨┤─И∙э─╣┼╒Х═╤е╜╣ЇЁ╜└°(АААААААААААААААААААААБэ─╣Е╣═▌Х╚АШШАа(ААААААААААААААААААААААААё└БН▒Е══9Е╡ФЇЙ╤Хс╨╡═▒Е╤Ф┤╪└└Б╤Хс╨╡с╠И°(ААААААААААААААААААААААААААё═┴Е╕БН▒Е══9Е╡ФЇЙЩ╜╣╨╡Й╜▒РБ╤Хс╨╡═▒Е╤Ф┤▄└└И√ВЪ'ВЪУВЮ7ВЪУВЪ└┐ВЪчВЪ ВЪгВЮ7ВЪ|шЁ╜═┴Е╕°Бэ─╣Е╣═▌Х╔Ї(ААААААААААААААААААААААААЁ╜└°(ААААААААААААААААААААААеЇ(ААААААААААААААААААААЁ╜Се╪°(ААААААААААААААААААЁ╜Се╪°((ААААААААААААААААААёСе╪БН▒Е══9Е╡ФЇЙЩ▒ХрБе╤Х╡╠╡НХ╣╤Х╚Б═┴ЕНФ╡р┤─Б═б╔е╣м┤└И°(ААААААААААААААААААААёЙ╒╤╤╜╕(АААААААААААААААААААААБ╤х┴ФЇЙЙ╒╤╤╜╕И(АААААААААААААААААААААБ╜╣▒еНмїьадАЇ°БбЕ╣С▒ХХ▒Х╤Фб─╣еРеЇ(АААААААААААААААААААААБН▒Е══9Е╡ФЇЙ└┤─Б╤Хс╨╡═▒Е╤Ф┤╨└└Бб╜┘Х╚щ╤Хс╨╡╔╜═Ф┤╪└└Б╔╜╒╣СХРБ╤╔Е╣═е╤е╜╕И(АААААААААААААААААААААБ╤е╤▒ФЇЛВЪ╗ВЮВЪoВЮВЪаИ(АААААААААААААААААААА°(ААААААААААААААААААААААёQ╔Е═а╚БН▒Е══9Е╡ФЇЙ▄┤╠╕╘Ба┤╠╕╘ИА╝°(ААААААААААААААААААААЁ╜Й╒╤╤╜╕°(ААААААААААААААААААЁ╜Се╪°(ААААААААААААААААЁ╜Се╪°(ААААААААААААААдь(АААААААААААБЇеЇ(ААААААААААЁ╜Се╪°(ААААААААеЇ(ААААААЁ╜Се╪°(ААААЁ╜Се╪°(ААдь)Ї(
+              рж╢рж┐ржХрзНрж╖ржХрзЗрж░ ржоржбрзЗрж▓ ржЙрждрзНрждрж░ ржУ ржорж╛рж░рзНржХрж┐ржВ рж╕рзНржХрж┐ржо (TEACHER'S ANSWER KEY):
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-slate-600">
+              {selectedQuestionsList.map((q, idx) => (
+                <div key={idx} className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-0.5">
+                  <span className="font-bold text-slate-900">{idx + 1}. {q.chapter} ({q.marks} ржиржорзНржмрж░):</span>
+                  <p className="text-slate-700">{q.answer || 'ржмрж┐рж╢ржж ржмрж┐ржмрж░ржг ржХрзНрж▓рж╛рж╕рзЗ ржЖрж▓рзЛржЪрж┐ржд рж╣рзЯрзЗржЫрзЗред'}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Questions Repository List */}
+      <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="font-black text-slate-900 text-sm flex items-center space-x-2">
+            <BookOpen className="w-4 h-4 text-indigo-600" />
+            <span>рж╕ржВрж░ржХрзНрж╖рж┐ржд ржкрзНрж░рж╢рзНржи ржнрж╛ржгрзНржбрж╛рж░ ({filteredQuestions.length} ржЯрж┐ ржкрзНрж░рж╢рзНржи)</span>
+          </h3>
+          <span className="text-xs text-slate-500">
+            ржкрзНрж░рж╢рзНржи ржмрж╛ржЫрж╛ржЗ ржХрж░рждрзЗ ржкрж╛рж╢рзЗрж░ ржЪрзЗржХржмржХрзНрж╕рзЗ ржХрзНрж▓рж┐ржХ ржХрж░рзБржи
+          </span>
+        </div>
+
+        {filteredQuestions.length === 0 ? (
+          <div className="p-8 text-center text-slate-400 text-xs font-bold bg-slate-50 rounded-2xl border border-slate-200">
+            ржПржЗ ржлрж┐рж▓рзНржЯрж╛рж░рзЗ ржХрзЛржирзЛ ржкрзНрж░рж╢рзНржи ржкрж╛ржУрзЯрж╛ ржпрж╛рзЯржирж┐ред ржирждрзБржи ржкрзНрж░рж╢рзНржи ржпрзБржХрзНржд ржХрж░рждрзЗ ржЙржкрж░рзЗрж░ ржмрж╛ржЯржирзЗ ржХрзНрж▓рж┐ржХ ржХрж░рзБржиред
+          </div>
+        ) : (
+          <div className="divide-y divide-slate-100">
+            {filteredQuestions.map((q) => {
+              const isSelected = selectedQuestionIds.has(q.id);
+              return (
+                <div key={q.id} className="py-3.5 flex items-start justify-between gap-3 text-xs hover:bg-slate-50/70 p-2 rounded-2xl transition">
+                  <div className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleSelectQuestion(q.id)}
+                      className="mt-1 rounded text-indigo-600 w-4 h-4 cursor-pointer"
+                    />
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px] font-black">
+                          {q.classLevel}
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-bold">
+                          {q.subject}
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[10px] font-bold">
+                          {q.chapter}
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-purple-100 text-purple-800 text-[10px] font-black">
+                          {q.marks} ржиржорзНржмрж░
+                        </span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          q.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-800' :
+                          q.difficulty === 'Medium' ? 'bg-blue-100 text-blue-800' : 'bg-rose-100 text-rose-800'
+                        }`}>
+                          {q.difficulty}
+                        </span>
+                      </div>
+                      <p className="font-extrabold text-slate-900 text-sm mt-1">{q.question}</p>
+                      {q.answer && (
+                        <p className="text-slate-600 text-xs">
+                          <span className="font-bold text-slate-700">ржЙрждрзНрждрж░/рж╣рж┐ржирзНржЯ:</span> {q.answer}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(q.id)}
+                      className="p-1 text-slate-400 hover:text-rose-600 rounded transition"
+                      title="ржорзБржЫрзБржи"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
