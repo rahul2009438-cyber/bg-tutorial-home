@@ -50,9 +50,9 @@ import CoachingFinancialLedger from './CoachingFinancialLedger';
 import SystemIntegrityCenter from './SystemIntegrityCenter';
 import Student360Timeline from './Student360Timeline';
 import CoachingGrowthAnalytics from './CoachingGrowthAnalytics';
-import WhatsAppBatchAutoImporter from './WhatsAppBatchAutoImporter';
-import DiaryPhotoAutoGrader from './DiaryPhotoAutoGrader';
-import StudentNoteAndDocxStudio from './StudentNoteAndDocxStudio';
+// import WhatsAppBatchAutoImporter from './WhatsAppBatchAutoImporter';
+// import DiaryPhotoAutoGrader from './DiaryPhotoAutoGrader';
+// import StudentNoteAndDocxStudio from './StudentNoteAndDocxStudio';
 import QuizArena from './QuizArena';
 
 
