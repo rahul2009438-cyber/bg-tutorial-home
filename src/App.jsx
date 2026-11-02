@@ -1711,10 +1711,10 @@ export default function App() {
                 <div className="lg:col-span-5">
                   <div className="bg-gradient-to-b from-slate-800/80 to-slate-900/90 backdrop-blur-xl p-6 rounded-3xl border border-slate-700/60 shadow-2xl relative">
                     <div 
-                      onClick={() => setSelectedMediaModal({ src: teacherPortraitImg, fallbackSrc: './images/teacher-portrait.jpg', title: 'শিক্ষক বাবুন ঘোষ (Babun Ghosh)', desc: 'বি.জি. টিউটোরিয়াল হোম — ১৫+ বছরের শিক্ষকতা অভিজ্ঞতা।' })}
+                      onClick={() => setSelectedMediaModal({ src: teacherPortraitImg, fallbackSrc: '/images/teacher-portrait.jpg', title: 'শিক্ষক বাবুন ঘোষ (Babun Ghosh)', desc: 'বি.জি. টিউটোরিয়াল হোম — ১৫+ বছরের শিক্ষকতা অভিজ্ঞতা।' })}
                       className="relative mx-auto w-36 h-36 mb-4 group cursor-pointer"
                     >
-                      <img src={teacherPortraitImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "./images/teacher-portrait.jpg"; }}
+                      <img src={teacherPortraitImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/images/teacher-portrait.jpg"; }}
                         alt="শিক্ষক বাবুন ঘোষ"
                         className="w-full h-full rounded-2xl object-cover border-4 border-amber-400 shadow-2xl group-hover:scale-105 transition duration-300"
                       />
@@ -1930,11 +1930,11 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Card 1: Poster */}
                 <div 
-                  onClick={() => setSelectedMediaModal({ src: teacherPosterImg, fallbackSrc: './images/teacher-poster.jpg', title: 'অফিসিয়াল কোচিং পোস্টার ও ফ্লেক্স ব্যানার', desc: 'সপ্তম থেকে দ্বাদশ শ্রেণীর ব্যাচ ও কোর্স বিবরণী সহ বি.জি. টিউটোরিয়াল হোমের অফিশিয়াল ফ্লেক্স।' })}
+                  onClick={() => setSelectedMediaModal({ src: teacherPosterImg, fallbackSrc: '/images/teacher-poster.jpg', title: 'অফিসিয়াল কোচিং পোস্টার ও ফ্লেক্স ব্যানার', desc: 'সপ্তম থেকে দ্বাদশ শ্রেণীর ব্যাচ ও কোর্স বিবরণী সহ বি.জি. টিউটোরিয়াল হোমের অফিশিয়াল ফ্লেক্স।' })}
                   className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col"
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-slate-900 flex items-center justify-center relative">
-                    <img src={teacherPosterImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "./images/teacher-poster.jpg"; }} 
+                    <img src={teacherPosterImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/images/teacher-poster.jpg"; }} 
                       alt="কোচিং ফ্লেক্স ব্যানার" 
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                     />
@@ -1960,11 +1960,11 @@ export default function App() {
 
                 {/* Card 2: Signboard */}
                 <div 
-                  onClick={() => setSelectedMediaModal({ src: bannerBoardImg, fallbackSrc: './images/banner-board.jpg', title: 'টিউটোরিয়াল হোম সাইনবোর্ড (দক্ষিণ হাবড়া)', desc: 'দক্ষিণ হাবড়া হাই স্কুলের সন্নিকটে অবস্থিত সেন্টারের বাস্তব পরিচিতি ফলক।' })}
+                  onClick={() => setSelectedMediaModal({ src: bannerBoardImg, fallbackSrc: '/images/banner-board.jpg', title: 'টিউটোরিয়াল হোম সাইনবোর্ড (দক্ষিণ হাবড়া)', desc: 'দক্ষিণ হাবড়া হাই স্কুলের সন্নিকটে অবস্থিত সেন্টারের বাস্তব পরিচিতি ফলক।' })}
                   className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col"
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-slate-900 flex items-center justify-center relative">
-                    <img src={bannerBoardImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "./images/banner-board.jpg"; }} 
+                    <img src={bannerBoardImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/images/banner-board.jpg"; }} 
                       alt="টিউটোরিয়াল হোম সাইনবোর্ড" 
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                     />
@@ -1990,11 +1990,11 @@ export default function App() {
 
                 {/* Card 3: Visiting Card */}
                 <div 
-                  onClick={() => setSelectedMediaModal({ src: visitingCardImg, fallbackSrc: './images/visiting-card.jpg', title: 'অফিসিয়াল ভিজিটিং কার্ড — বাবুন ঘোষ', desc: 'শিক্ষক বাবুন ঘোষ মহাশয়ের ব্যক্তিগত ভিজিটিং কার্ড ও অফিশিয়াল ফোন নম্বর।' })}
+                  onClick={() => setSelectedMediaModal({ src: visitingCardImg, fallbackSrc: '/images/visiting-card.jpg', title: 'অফিসিয়াল ভিজিটিং কার্ড — বাবুন ঘোষ', desc: 'শিক্ষক বাবুন ঘোষ মহাশয়ের ব্যক্তিগত ভিজিটিং কার্ড ও অফিশিয়াল ফোন নম্বর।' })}
                   className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col"
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-slate-900 flex items-center justify-center relative">
-                    <img src={visitingCardImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "./images/visiting-card.jpg"; }} 
+                    <img src={visitingCardImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/images/visiting-card.jpg"; }} 
                       alt="ভিজিটিং কার্ড" 
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                     />
@@ -2025,10 +2025,10 @@ export default function App() {
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <div 
-                    onClick={() => setSelectedMediaModal({ src: teacherPortraitImg, fallbackSrc: './images/teacher-portrait.jpg', title: 'শিক্ষক বাবুন ঘোষ', desc: 'বি.জি. টিউটোরিয়াল হোমের প্রতিষ্ঠাতা ও শিক্ষক।' })}
+                    onClick={() => setSelectedMediaModal({ src: teacherPortraitImg, fallbackSrc: '/images/teacher-portrait.jpg', title: 'শিক্ষক বাবুন ঘোষ', desc: 'বি.জি. টিউটোরিয়াল হোমের প্রতিষ্ঠাতা ও শিক্ষক।' })}
                     className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-md shrink-0 cursor-pointer hover:scale-105 transition"
                   >
-                    <img src={teacherPortraitImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "./images/teacher-portrait.jpg"; }} alt="বাবুন ঘোষ" className="w-full h-full object-cover" />
+                    <img src={teacherPortraitImg} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/images/teacher-portrait.jpg"; }} alt="বাবুন ঘোষ" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 mb-1.5">
