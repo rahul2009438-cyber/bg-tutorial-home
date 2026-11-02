@@ -1,6 +1,6 @@
 // B.G. TUTORIAL HOME - AUTOMATIC HARD CACHE PURGE & SERVICE WORKER SHIELD
-// Target Cache Version: bg-tutorial-v8
-const CACHE_NAME = 'bg-tutorial-v8';
+// Target Cache Version: bg-tutorial-v9
+const CACHE_NAME = 'bg-tutorial-v9';
 
 self.addEventListener('install', (event) => {
   // Immediately activate without waiting
@@ -9,7 +9,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    // 1. Iterate through all caches and execute hard purge of any cache not matching 'bg-tutorial-v8'
+    // 1. Iterate through all caches and execute hard purge of any cache not matching 'bg-tutorial-v9'
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
