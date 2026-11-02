@@ -6,11 +6,11 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>বি.জি. টিউটোরিয়াল হোম | শিক্ষক বাবুন ঘোষ - দক্ষিণ হাবড়া</title>
-    
+
     <!-- Automatic Hard Cache Purge & Service Worker Uninstaller -->
     <script>
       (function() {
-        var PURGE_KEY = 'bg_cache_purge_2026_10_31_v8';
+        var PURGE_KEY = 'bg_cache_purge_2026_11_02_v9';
         try {
           // 1. Unregister all existing service workers immediately
           if ('serviceWorker' in navigator) {
@@ -28,14 +28,12 @@
               }
             });
           }
-          // 3. One-time clean refresh if controller was present
+          // 3. One-time clean refresh for all clients to ensure fresh assets
           if (localStorage.getItem(PURGE_KEY) !== 'done') {
             localStorage.setItem(PURGE_KEY, 'done');
-            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-              setTimeout(function() {
-                window.location.reload(true);
-              }, 200);
-            }
+            setTimeout(function() {
+              window.location.reload(true);
+            }, 150);
           }
         } catch (e) {
           console.warn('Auto cache purge note:', e);
@@ -51,10 +49,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="বি.জি. টিউটোরিয়াল হোম" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    
+
     <!-- SEO & Open Graph -->
     <meta name="description" content="বি.জি. টিউটোরিয়াল হোম - দক্ষিণ হাবড়া, এস. এন. দে রোড। অভিজ্ঞ শিক্ষক বাবুন ঘোষ পরিচালিত সপ্তম থেকে দ্বাদশ শ্রেণীর বিশেষ কোচিং একাডেমি।" />
-    <meta name="author" content="Rahul Dutta (Lead Digital Architect & Developer) - Created by Rahul" />
+    <meta name="author" content="Rahul Dutta (Lead Digital Architect & Developer) - Created by Rahul ⚡" />
     <meta property="og:title" content="বি.জি. টিউটোরিয়াল হোম | শিক্ষক বাবুন ঘোষ" />
     <meta property="og:description" content="দক্ষিণ হাবড়া গণিত ও বিজ্ঞান স্পেশাল কোচিং একাডেমি" />
     <meta property="og:image" content="/icon-512.png" />
